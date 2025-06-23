@@ -1,0 +1,56 @@
+---
+title: "Networks of Influence and Support in Peace Operations"
+output: html_notebook
+---
+
+```{r}
+data <- readRDS("bdi_result_crs.rds")
+```
+
+# Drafting Visualization
+```{r}
+library(visNetwork)
+library(tidygraph)
+library(dplyr)
+```
+
+```{r}
+# Subsetting to Burundi's 2005 data
+bdi_2005 <- data[["edge_lists"]][["2005"]]
+
+# Create a node list of all unique orgs from sender and receiver
+nodes <- bdi_2005 %>%
+  select(id, name = sender, orgtype = sender_orgtype) %>%
+  bind_rows(
+    bdi_2005 %>%
+      select(id, name = receiver, orgtype = receiver_orgtype)
+  ) %>%
+  distinct(name, .keep_all = TRUE) %>%
+  mutate(label = name, id = name)  # visNetwork needs 'id' and 'label'
+
+```
+
+```{r}
+# Creating edge data
+edges <- bdi_2005 %>%
+  mutate(from = sender, to = receiver) %>%
+  select(from, to, cost, n_contracts)
+```
+
+```{r}
+# Creating visualization
+visNetwork(nodes, edges) %>%
+  visNodes(shape = "dot", scaling = list(min = 10, max = 30)) %>%
+  visEdges(smooth = TRUE) %>%
+  visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+  visGroups(groupname = "Government", color = "lightblue") %>%
+  visGroups(groupname = "NGO", color = "lightgreen") %>%
+  visGroups(groupname = "Private", color = "orange") %>%
+  visLegend() %>%
+  visLayout(randomSeed = 123)
+```
+
+
+
+
+
