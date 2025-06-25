@@ -18,10 +18,16 @@ library(tidyverse)
 burundi_crs <- readRDS("../data/bdi_result_crs.rds")
 burundi_crs_2005 <- burundi_crs[["edge_lists"]][["2005"]]
 burundi_crs_2005 <- burundi_crs_2005 %>%
-  mutate(country = "burundi")
+  mutate(country = "Burundi")
 
 country <- c("Burundi", "Colombia")
-dataframe <- c("CRS", "dataframe2", "dataframe3")
+dataframe <- c("United Nations Multi-Partner Trust Fund (MPTF) documents",
+               "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)",
+               "International Aid Transparency Initiative (IATI)")
+org_type <- c("orgtype 1", "orgtype 2", "orgtype 3")
+sector <- c("sector 1", "sector 2", "sector 3")
+relationships <- c("relationship 1", "relationship 2", "relationship 3")
+
 }
 
 # Data Wrangling for Visualization
@@ -58,7 +64,11 @@ ui <- navbarPage("Research Implementation Policy Institute",
                               column(4,
                                      selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe),
                                      selectInput("select_country", "What country are you interested in?", choices= country),
-                                     sliderInput("years", "What time period are you interested in?", value= c(2012,2014), min = 2005, max = 2021)
+                                     sliderInput("years", "What time period are you interested in?", value= c(2012,2014), min = 2005, max = 2021),
+                                     selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= org_type),
+                                     selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= org_type),
+                                     selectInput("select_sector", "What sectors are you interested in?", choices= sector),
+                                     selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships)
                                      ),
                               column(8,
                                      visNetworkOutput("network_visualization")
@@ -66,6 +76,9 @@ ui <- navbarPage("Research Implementation Policy Institute",
                               ),
                             fluidRow(
                               column(12,
+                                     downloadButton("download_full", "Download full dataset"),
+                                     downloadButton("download_custom", "Download Custom dataset"),
+                                     
                                      dataTableOutput("data_table")
                                      )
                             )
