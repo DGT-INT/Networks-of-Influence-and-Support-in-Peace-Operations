@@ -12,6 +12,7 @@ data <- readRDS("bdi_result_crs.rds")
 library(visNetwork)
 library(tidygraph)
 library(dplyr)
+library(DT)
 ```
 
 ```{r}
@@ -48,6 +49,10 @@ visNetwork(nodes, edges) %>%
   visGroups(groupname = "Private", color = "orange") %>%
   visLegend() %>%
   visLayout(randomSeed = 123)
+```
+
+```{r}
+visNetwork(nodes, edges)
 ```
 
 
