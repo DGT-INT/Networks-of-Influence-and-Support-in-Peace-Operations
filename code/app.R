@@ -12,10 +12,17 @@ library(visNetwork)
 library(tidygraph)
 library(dplyr)
 library(tidyverse)
+library(DT)
 
 # Data Wrangling
 {
 burundi_crs <- readRDS("../data/bdi_result_crs.rds")
+colombia_crs <- readRDS("../data/col_result_crs.rds")
+
+burundi_mptf <- readRDS("../data/bdi_result_mptf_nogovsig.rds")
+colombia_mptf <- readRDS("../data/col_result_mptf_nogovsig.rds")
+
+  
 burundi_crs_2005 <- burundi_crs[["edge_lists"]][["2005"]]
 burundi_crs_2005 <- burundi_crs_2005 %>%
   mutate(country = "Burundi")
@@ -49,7 +56,6 @@ relationships <- c("relationship 1", "relationship 2", "relationship 3")
     select(from, to, cost, n_contracts)
 
 }
-
 
 
 # Define UI for application that draws a histogram
