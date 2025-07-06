@@ -42,6 +42,11 @@ its possible. I also did a visually inspection on if the organization type match
 
 # Creating the nodes dataframe
 
+for the nodes dataframe i need:
+- id = Sender and Receiver uniquely appended
+- label = id
+- group = organization types uniquely appended
+
 ```{r}
 nodes <- burundi_crs_2005 %>%
   mutate(id = sender, group = sender_orgtype) %>%
@@ -55,17 +60,44 @@ nodes <- burundi_crs_2005 %>%
   mutate(label = id)
 ```
 
-for the nodes dataframe i need:
-- id = Sender and Receiver uniquely appended
-- label = id
-- group = organization types uniquely appended
+
+# Creating the edges dataframe
+
+For the edges, I will need:
+- from = sender
+- to = receiver
+- value = (for now this will be the number of contracts. In the shiny app this will be customizeable between cost too)
+- title = This can be a custom message. something saying "this is a contract from <sender> to <receiver>. the contract id is <id>. the number of contract between them is <n_contracts>. the sector is <sector>.
 
 ```{r}
-# Creating edge data
 edges <- burundi_crs_2005 %>%
   mutate(from = sender, to = receiver) %>%
-  select(from, to, cost, n_contracts)
+  select(from, to)
 ```
+
+```{r}
+# this will be dependent on the user selection (pick one option)
+
+#option 1
+edges$value <- burundi_crs_2005$cost
+
+#option 2
+n_contract_sum <- burundi_crs_2005 %>%
+  group_by(sender, receiver) %>%
+  summarise(value = n_distinct(id), .groups = "drop") %>%
+  mutate(from = sender, to = receiver) %>%
+  select(from, to, value)
+
+edges <- left_join(edges, n_contract_sum, by = c("from", "to")) %>%
+  distinct(from, to, value, .keep_all = TRUE)
+```
+
+
+# Network Visualization
+```{r}
+visNetwork(nodes, edges)
+```
+
 
 ```{r}
 # Creating visualization
@@ -114,7 +146,7 @@ nodes_example <- data.frame(id = 1:10,
 #  1 Node 1   GrA     1   square <p><b>1</b><br>Node !</p>  darkred  FALSE
 #  2 Node 2   GrB     2 triangle <p><b>2</b><br>Node !</p>     grey   TRUE
 
-edges_example <- data.frame(from = c(1,2,5,7,8,10), to = c(9,3,1,6,4,7))
+edges_example <- data.frame(from = c(1,2,5,7,8,10), to = c(9,3,1,6,4,7), value = c(0,2,3,4,5,26), title = c("title/ tool tip"))
 ```
 
 
@@ -125,5 +157,6 @@ visNetwork(nodes_example, edges_example, height = "500px", width = "100%")
 
 ## Questions
 - there are duplicate contract IDs, ask about them. (I only check Burundi 2005)
+- There are negative contracts
 
 
