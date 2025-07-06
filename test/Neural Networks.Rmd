@@ -29,30 +29,36 @@ burundi_duplicates
 ```
 There are duplicates which would need to be further investigated.
 
-# Creating a node list of all unique orgs from sender and receiver
-
+- can a sender by a receiver and vice versa?
 ```{r}
-nodes <- burundi_crs_2005 %>%
-  group_by(sender, receiver) %>%
-  summarise(total_contracts = n_distinct(id), .groups = "drop") %>%
-  ungroup()%>%
-  select(sender, receiver, sender_orgtype, receiver_orgtype)
+library(tibble)
+
+test_data <- tibble(
+  sender_in_receiver = burundi_crs_2005$sender %in% burundi_crs_2005$receiver
+)
+subset(burundi_crs_2005, sender %in% receiver)
 ```
+its possible. I also did a visually inspection on if the organization type matches based on if the organization is sender and receiver and it does match so no issues is suspected in regards to that.
 
-
+# Creating the nodes dataframe
 
 ```{r}
-# Create a node list of all unique orgs from sender and receiver
 nodes <- burundi_crs_2005 %>%
-  select(id, name = sender, orgtype = sender_orgtype) %>%
+  mutate(id = sender, group = sender_orgtype) %>%
+  select(id, group) %>%
   bind_rows(
     burundi_crs_2005 %>%
-      select(id, name = receiver, orgtype = receiver_orgtype)
-  ) %>%
-  distinct(name, .keep_all = TRUE) %>%
-  mutate(label = name, id = name)  # visNetwork needs 'id' and 'label'
-
+      mutate(id = receiver, group = receiver_orgtype) %>%
+      select(id, group)
+    ) %>%
+  distinct(id, .keep_all = TRUE) %>%
+  mutate(label = id)
 ```
+
+for the nodes dataframe i need:
+- id = Sender and Receiver uniquely appended
+- label = id
+- group = organization types uniquely appended
 
 ```{r}
 # Creating edge data
@@ -79,7 +85,7 @@ visNetwork(nodes, edges)
 ```
 
 ```{r}
-nodes <- data.frame(id = 1:10, 
+nodes_example <- data.frame(id = 1:10, 
                     
   # add labels on nodes
   label = paste("label Node", 1:10),
@@ -108,15 +114,12 @@ nodes <- data.frame(id = 1:10,
 #  1 Node 1   GrA     1   square <p><b>1</b><br>Node !</p>  darkred  FALSE
 #  2 Node 2   GrB     2 triangle <p><b>2</b><br>Node !</p>     grey   TRUE
 
-edges <- data.frame(from = c(1,2,5,7,8,10), to = c(9,3,1,6,4,7))
-
-testing_edges <- edges
-testing_nodes <- nodes
+edges_example <- data.frame(from = c(1,2,5,7,8,10), to = c(9,3,1,6,4,7))
 ```
 
 
 ```{r}
-visNetwork(nodes, edges, height = "500px", width = "100%")
+visNetwork(nodes_example, edges_example, height = "500px", width = "100%")
 ```
 
 
