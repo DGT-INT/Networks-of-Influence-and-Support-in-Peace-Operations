@@ -1,11 +1,4 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
+# Shiny App for Custom Neural Networks
 
 library(shiny)
 library(visNetwork)
@@ -15,14 +8,118 @@ library(tidyverse)
 library(DT)
 
 # Data Wrangling
+# Note: I need to update the loop to automate on a larger scale when i get more data
 {
-burundi_crs <- readRDS("../data/bdi_result_crs.rds")
-colombia_crs <- readRDS("../data/col_result_crs.rds")
+Burundi_CRS <- readRDS("../data/bdi_result_crs.rds")
+Colombia_CRS <- readRDS("../data/col_result_crs.rds")
 
-burundi_mptf <- readRDS("../data/bdi_result_mptf_nogovsig.rds")
-colombia_mptf <- readRDS("../data/col_result_mptf_nogovsig.rds")
+Burundi_MPTF <- readRDS("../data/bdi_result_mptf_nogovsig.rds")
+Colombia_MPTF <- readRDS("../data/col_result_mptf_nogovsig.rds")
 
+# (Burundi) Extracting and Binding CRS data by Country
+years <- names(Burundi_CRS[["edge_lists"]]) %>% 
+  as.numeric() %>% 
+  sort()
+
+first_year <- min(years)
+last_year  <- max(years)
+
+for (i in first_year:last_year) {
+  Burundi_CRS_i <- Burundi_CRS[["edge_lists"]][[as.character(i)]]
   
+  Burundi_CRS_i <- Burundi_CRS_i %>%
+    mutate(Country = "Burundi", Year = i)
+  
+  assign(paste0("Burundi_CRS_", i), Burundi_CRS_i)
+}
+
+Burundi_CRS_all_years <- bind_rows(
+  mget(paste0("Burundi_CRS_", first_year:last_year))
+)
+
+rm(list = paste0("Burundi_CRS_", first_year:last_year), Burundi_CRS_i, Burundi_CRS)
+
+# (Burundi) Extracting and Binding MPTF data by Country
+years <- names(Burundi_MPTF[["edge_lists"]]) %>% 
+  as.numeric() %>% 
+  sort()
+
+first_year <- min(years)
+last_year  <- max(years)
+
+
+for (i in first_year:last_year) {
+  Burundi_MPTF_i <- Burundi_MPTF[["edge_lists"]][[as.character(i)]]
+  
+  Burundi_MPTF_i <- Burundi_MPTF_i %>%
+    mutate(Country = "Burundi", Year = i)
+  
+  assign(paste0("Burundi_MPTF_", i), Burundi_MPTF_i)
+}
+
+Burundi_MPTF_all_years <- bind_rows(
+  mget(paste0("Burundi_MPTF_", first_year:last_year))
+)
+
+rm(list = paste0("Burundi_MPTF_", first_year:last_year), Burundi_MPTF_i, Burundi_MPTF)
+
+#-------
+
+# (Colombia) Extracting and Binding CRS data by Country
+years <- names(Colombia_CRS[["edge_lists"]]) %>% 
+  as.numeric() %>% 
+  sort()
+
+first_year <- min(years)
+last_year  <- max(years)
+
+for (i in first_year:last_year) {
+  Colombia_CRS_i <- Colombia_CRS[["edge_lists"]][[as.character(i)]]
+  
+  Colombia_CRS_i <- Colombia_CRS_i %>%
+    mutate(Country = "Colombia", Year = i)
+  
+  assign(paste0("Colombia_CRS_", i), Colombia_CRS_i)
+}
+
+Colombia_CRS_all_years <- bind_rows(
+  mget(paste0("Colombia_CRS_", first_year:last_year))
+)
+
+rm(list = paste0("Colombia_CRS_", first_year:last_year), Colombia_CRS_i, Colombia_CRS)
+
+# (Colombia) Extracting and Binding MPTF data by Country
+years <- names(Colombia_MPTF[["edge_lists"]]) %>% 
+  as.numeric() %>% 
+  sort()
+
+first_year <- min(years)
+last_year  <- max(years)
+
+
+for (i in first_year:last_year) {
+  Colombia_MPTF_i <- Colombia_MPTF[["edge_lists"]][[as.character(i)]]
+  
+  Colombia_MPTF_i <- Colombia_MPTF_i %>%
+    mutate(Country = "Colombia", Year = i)
+  
+  assign(paste0("Colombia_MPTF_", i), Colombia_MPTF_i)
+}
+
+Colombia_MPTF_all_years <- bind_rows(
+  mget(paste0("Colombia_MPTF_", first_year:last_year))
+)
+
+rm(list = paste0("Colombia_MPTF_", first_year:last_year), Colombia_MPTF_i, Colombia_MPTF)
+
+}
+
+
+
+
+
+
+
 burundi_crs_2005 <- burundi_crs[["edge_lists"]][["2005"]]
 burundi_crs_2005 <- burundi_crs_2005 %>%
   mutate(country = "Burundi")
@@ -35,7 +132,7 @@ org_type <- c("orgtype 1", "orgtype 2", "orgtype 3")
 sector <- c("sector 1", "sector 2", "sector 3")
 relationships <- c("relationship 1", "relationship 2", "relationship 3")
 
-}
+
 
 # Data Wrangling for Visualization
 {
@@ -59,7 +156,7 @@ relationships <- c("relationship 1", "relationship 2", "relationship 3")
 
 
 # Define UI for application that draws a histogram
-ui <- navbarPage("Research Implementation Policy Institute",
+ui <- { navbarPage("Research Implementation Policy Institute",
                  id = "tabs",
 
     tabPanel("Home"),
@@ -95,7 +192,7 @@ ui <- navbarPage("Research Implementation Policy Institute",
                  tabPanel("Also To Be Determined", textInput("example text", "label3"))
       ),
       navbarMenu("Meet The Team")
-)
+) }
     
 
 # Define server logic required to draw a histogram
