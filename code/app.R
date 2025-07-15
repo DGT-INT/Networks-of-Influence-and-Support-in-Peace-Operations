@@ -8,7 +8,7 @@ library(tidyverse)
 library(DT)
 
 # Data Wrangling
-# Note: I need to update the loop to automate on a larger scale when i get more data
+## Note: I need to update the loop to automate on a larger scale when i get more data
 {
 Burundi_CRS <- readRDS("../data/bdi_result_crs.rds")
 Colombia_CRS <- readRDS("../data/col_result_crs.rds")
@@ -114,48 +114,19 @@ rm(list = paste0("Colombia_MPTF_", first_year:last_year), Colombia_MPTF_i, Colom
 
 }
 
-
-
-
-
-
-
-burundi_crs_2005 <- burundi_crs[["edge_lists"]][["2005"]]
-burundi_crs_2005 <- burundi_crs_2005 %>%
-  mutate(country = "Burundi")
-
+# Inputs for the filter Selection
+{
 country <- c("Burundi", "Colombia")
 dataframe <- c("United Nations Multi-Partner Trust Fund (MPTF) documents",
                "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)",
                "International Aid Transparency Initiative (IATI)")
-org_type <- c("orgtype 1", "orgtype 2", "orgtype 3")
-sector <- c("sector 1", "sector 2", "sector 3")
+sender_org_type <- unique(Burundi_CRS_all_years$sender_orgtype)
+receiver_org_type <- unique(Burundi_CRS_all_years$receiver_orgtype)
+sector <- unique(Burundi_CRS_all_years$sector)
 relationships <- c("relationship 1", "relationship 2", "relationship 3")
-
-
-
-# Data Wrangling for Visualization
-{
-  
-  # Create a node list of all unique orgs from sender and receiver
-  nodes <- burundi_crs_2005 %>%
-    select(id, name = sender, orgtype = sender_orgtype) %>%
-    bind_rows(
-      burundi_crs_2005 %>%
-        select(id, name = receiver, orgtype = receiver_orgtype)
-    ) %>%
-    distinct(name, .keep_all = TRUE) %>%
-    mutate(label = name, id = name)  # visNetwork needs 'id' and 'label'
-  
-  # Creating edge data
-  edges <- burundi_crs_2005 %>%
-    mutate(from = sender, to = receiver) %>%
-    select(from, to, cost, n_contracts)
-
 }
 
-
-# Define UI for application that draws a histogram
+# Define UI for application
 ui <- { navbarPage("Research Implementation Policy Institute",
                  id = "tabs",
 
@@ -168,9 +139,9 @@ ui <- { navbarPage("Research Implementation Policy Institute",
                                      selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe),
                                      selectInput("select_country", "What country are you interested in?", choices= country),
                                      sliderInput("years", "What time period are you interested in?", value= c(2012,2014), min = 2005, max = 2021),
-                                     selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= org_type),
-                                     selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= org_type),
-                                     selectInput("select_sector", "What sectors are you interested in?", choices= sector),
+                                     selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= sender_org_type, multiple = TRUE, selected = sender_org_type),
+                                     selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= receiver_org_type, multiple = TRUE, selected = receiver_org_type),
+                                     selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE),
                                      selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships)
                                      ),
                               column(8,
@@ -194,26 +165,68 @@ ui <- { navbarPage("Research Implementation Policy Institute",
       navbarMenu("Meet The Team")
 ) }
     
-
-# Define server logic required to draw a histogram
+# Define server logic required
 server <- function(input, output) {
-
-# Data Frame
+  
+  ## Creating Reactive Data Frame
+  {
+    network_viz_data <- reactive({
+      Burundi_CRS_all_years %>%
+        filter(Year >= input$years[1],
+               Year <= input$years[2],
+               sender_orgtype %in% input$select_sender_org_type,
+               receiver_orgtype %in% input$select_receiver_org_type)
+    })
+  }
+  
+  ## Creating Nodes Data Frame
+  {
+    nodes <- Burundi_CRS_all_years %>%
+      mutate(id = sender, group = sender_orgtype) %>%
+      select(id, group) %>%
+      bind_rows(
+        Burundi_CRS_all_years %>%
+          mutate(id = receiver, group = receiver_orgtype) %>%
+          select(id, group)
+      ) %>%
+      distinct(id, .keep_all = TRUE) %>%
+      mutate(label = id)
+    
+  }
+  
+  ## Creating Edges Data Frame
+  {
+    edges <- Burundi_CRS_all_years %>%
+      mutate(from = sender, to = receiver) %>%
+      select(from, to)
+    
+    
+    ### this will be dependent on the user selection (pick one option)
+    
+    #### option 1
+#    edges$value <- Burundi_CRS_all_years$cost
+    
+    #### option 2
+    n_contract_sum <- Burundi_CRS_all_years %>%
+      group_by(sender, receiver) %>%
+      summarise(value = n_distinct(id), .groups = "drop") %>%
+      mutate(from = sender, to = receiver) %>%
+      select(from, to, value)
+    
+    edges <- left_join(edges, n_contract_sum, by = c("from", "to")) %>%
+      distinct(from, to, value, .keep_all = TRUE)
+  }
+  
+  ## Data Frame on display
   output$data_table <- renderDT({
-    datatable(burundi_crs_2005, options = list(pageLength = 20))
+    datatable(network_viz_data(), options = list(pageLength = 20))
   })
   
-# Network Visualization
+  ## Network Visualization
   output$network_visualization <- renderVisNetwork({
     visNetwork(nodes, edges) %>%
-      visNodes(shape = "dot", scaling = list(min = 10, max = 30)) %>%
-      visEdges(smooth = TRUE) %>%
-      visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
-      visGroups(groupname = "Government", color = "lightblue") %>%
-      visGroups(groupname = "NGO", color = "lightgreen") %>%
-      visGroups(groupname = "Private", color = "orange") %>%
-      visLegend() %>%
-      visLayout(randomSeed = 123)
+      visLayout(randomSeed = 123) %>%
+      visEdges(arrows = "to")
   })
   
 }
