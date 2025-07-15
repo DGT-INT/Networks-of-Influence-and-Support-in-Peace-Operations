@@ -181,24 +181,26 @@ server <- function(input, output) {
   
   ## Creating Nodes Data Frame
   {
-    nodes <- Burundi_CRS_all_years %>%
+    nodes <- reactive({ network_viz_data() %>%
       mutate(id = sender, group = sender_orgtype) %>%
       select(id, group) %>%
       bind_rows(
-        Burundi_CRS_all_years %>%
+        network_viz_data() %>%
           mutate(id = receiver, group = receiver_orgtype) %>%
           select(id, group)
       ) %>%
       distinct(id, .keep_all = TRUE) %>%
       mutate(label = id)
+    })
     
   }
   
   ## Creating Edges Data Frame
   {
-    edges <- Burundi_CRS_all_years %>%
-      mutate(from = sender, to = receiver) %>%
-      select(from, to)
+    edges <- reactive({
+      base_edges <- network_viz_data() %>%
+        mutate(from = sender, to = receiver) %>%
+        select(from, to)
     
     
     ### this will be dependent on the user selection (pick one option)
@@ -207,14 +209,15 @@ server <- function(input, output) {
 #    edges$value <- Burundi_CRS_all_years$cost
     
     #### option 2
-    n_contract_sum <- Burundi_CRS_all_years %>%
+    n_contract_sum <- network_viz_data() %>%
       group_by(sender, receiver) %>%
       summarise(value = n_distinct(id), .groups = "drop") %>%
       mutate(from = sender, to = receiver) %>%
       select(from, to, value)
     
-    edges <- left_join(edges, n_contract_sum, by = c("from", "to")) %>%
+    left_join(base_edges, n_contract_sum, by = c("from", "to")) %>%
       distinct(from, to, value, .keep_all = TRUE)
+    })
   }
   
   ## Data Frame on display
@@ -224,7 +227,7 @@ server <- function(input, output) {
   
   ## Network Visualization
   output$network_visualization <- renderVisNetwork({
-    visNetwork(nodes, edges) %>%
+    visNetwork(nodes(), edges()) %>%
       visLayout(randomSeed = 123) %>%
       visEdges(arrows = "to")
   })
