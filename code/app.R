@@ -114,6 +114,14 @@ rm(list = paste0("Colombia_MPTF_", first_year:last_year), Colombia_MPTF_i, Colom
 
 }
 
+## Network Specific Feature Engeneering
+{
+  Burundi_CRS_all_years <- Burundi_CRS_all_years %>%
+    mutate(title_node = paste(sender, "is a ", sender_orgtype, "."),
+           title_edges = paste("This relationship from", sender, "to", receiver,"is in the ",sector, "sector"))
+  
+}
+
 # Inputs for the filter Selection
 {
 country <- c("Burundi", "Colombia")
@@ -127,7 +135,7 @@ relationships <- c("relationship 1", "relationship 2", "relationship 3")
 }
 
 # Define UI for application
-ui <- { navbarPage("Research Implementation Policy Institute",
+ui <- { navbarPage("Research on International Policy Implementation Lab",
                  id = "tabs",
 
     tabPanel("Home"),
@@ -136,9 +144,9 @@ ui <- { navbarPage("Research Implementation Policy Institute",
                           fluidPage(
                             fluidRow(
                               column(4,
-                                     selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe),
+                                     selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe, selected = "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)" ),
                                      selectInput("select_country", "What country are you interested in?", choices= country),
-                                     sliderInput("years", "What time period are you interested in?", value= c(2012,2014), min = 2005, max = 2021),
+                                     sliderInput("years", "What time period are you interested in?", value= c(2012,2013), min = 2005, max = 2021),
                                      selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= sender_org_type, multiple = TRUE, selected = sender_org_type),
                                      selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= receiver_org_type, multiple = TRUE, selected = receiver_org_type),
                                      selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE),
@@ -159,8 +167,10 @@ ui <- { navbarPage("Research Implementation Policy Institute",
                             )
                  ), # closing data vis tab
                
-                 tabPanel("To Be Determined", textInput("example text", "label2")),
-                 tabPanel("Also To Be Determined", textInput("example text", "label3"))
+                 tabPanel("Testing",
+                          verbatimTextOutput("nodes_dataframe"),
+                          verbatimTextOutput("edges_dataframe")),
+                 tabPanel("To Be Determined", textInput("example text", "label3"))
       ),
       navbarMenu("Meet The Team")
 ) }
@@ -182,12 +192,12 @@ server <- function(input, output) {
   ## Creating Nodes Data Frame
   {
     nodes <- reactive({ network_viz_data() %>%
-      mutate(id = sender, group = sender_orgtype) %>%
-      select(id, group) %>%
+      mutate(id = sender, group = sender_orgtype, title = title_node) %>%
+      select(id, group, title) %>%
       bind_rows(
         network_viz_data() %>%
-          mutate(id = receiver, group = receiver_orgtype) %>%
-          select(id, group)
+          mutate(id = receiver, group = receiver_orgtype, title = title_node) %>%
+          select(id, group, title)
       ) %>%
       distinct(id, .keep_all = TRUE) %>%
       mutate(label = id)
@@ -199,8 +209,8 @@ server <- function(input, output) {
   {
     edges <- reactive({
       base_edges <- network_viz_data() %>%
-        mutate(from = sender, to = receiver) %>%
-        select(from, to)
+        mutate(from = sender, to = receiver, title = title_edges) %>%
+        select(from, to, title)
     
     
     ### this will be dependent on the user selection (pick one option)
@@ -210,12 +220,12 @@ server <- function(input, output) {
     
     #### option 2
     n_contract_sum <- network_viz_data() %>%
-      group_by(sender, receiver) %>%
+      group_by(sender, receiver, title_edges) %>%
       summarise(value = n_distinct(id), .groups = "drop") %>%
-      mutate(from = sender, to = receiver) %>%
-      select(from, to, value)
+      mutate(from = sender, to = receiver, title = title_edges) %>%
+      select(from, to, value, title)
     
-    left_join(base_edges, n_contract_sum, by = c("from", "to")) %>%
+    left_join(base_edges, n_contract_sum, by = c("from", "to", "title")) %>%
       distinct(from, to, value, .keep_all = TRUE)
     })
   }
@@ -227,10 +237,18 @@ server <- function(input, output) {
   
   ## Network Visualization
   output$network_visualization <- renderVisNetwork({
-    visNetwork(nodes(), edges()) %>%
+    visNetwork(nodes(), edges(), main = paste(input$select_country,"'s",input$select_dataframe," data from",input$years[1]," to",input$years[2])) %>%
       visLayout(randomSeed = 123) %>%
-      visEdges(arrows = "to")
+      visEdges(arrows = "to", shadow = TRUE) %>%
+      visLegend() %>%
+      visOptions(highlightNearest = TRUE)
   })
+  
+  #testing panel
+  
+  output$nodes_dataframe <- renderPrint(head(nodes()))
+  output$edges_dataframe <- renderPrint(head(edges()))
+  
   
 }
 
