@@ -162,3 +162,89 @@ visNetwork(nodes_example, edges_example, height = "500px", width = "100%") %>%
 - There are negative contracts
 
 
+
+
+# Testing the Plotly Library
+```{r}
+library(plotly)
+library(igraph)
+library(igraphdata)
+```
+```{r}
+data(karate, package ="igraphdata")
+G <- upgrade_graph(karate)
+L <- layout.circle(G)
+```
+```{r}
+vs <- V(G)
+es <- as.data.frame(get.edgelist(G))
+
+Nv <- length(vs)
+Ne <- length(es[1]$V1)
+```
+
+```{r}
+library(plotly)
+
+Xn <- L[,1]
+Yn <- L[,2]
+
+network <- plot_ly(x = ~Xn, y = ~Yn, mode = "markers", text = vs$label, hoverinfo = "text")
+```
+
+```{r}
+edge_shapes <- list()
+for(i in 1:Ne) {
+  v0 <- es[i,]$V1
+  v1 <- es[i,]$V2
+
+  edge_shape = list(
+    type = "line",
+    line = list(color = "#030303", width = 0.3),
+    x0 = Xn[v0],
+    y0 = Yn[v0],
+    x1 = Xn[v1],
+    y1 = Yn[v1]
+  )
+
+  edge_shapes[[i]] <- edge_shape
+}
+
+```
+
+```{r}
+axis <- list(title = "", showgrid = FALSE, showticklabels = FALSE, zeroline = FALSE)
+
+fig <- layout(
+  network,
+  title = 'Karate Network',
+  shapes = edge_shapes,
+  xaxis = axis,
+  yaxis = axis
+)
+
+fig
+
+```
+# Testing Sigmajs
+```{r}
+library(sigmajs)
+
+set.seed(123)
+
+# generate data
+nodes <- sg_make_nodes(25) # 20 nodes
+edges <- sg_make_edges(nodes, 50) # 50 edges
+
+sigmajs() %>% # initialise
+  sg_nodes(nodes, id, label, size) %>% # add nodes
+  sg_edges(edges, id, source, target) %>% # add edges
+  sg_layout() %>%  # layout
+  sg_cluster() %>% # cluster
+  sg_drag_nodes() %>% # allows user to drag nodes
+  sg_neighbours() # show node neighbours on node click
+```
+
+
+
+
