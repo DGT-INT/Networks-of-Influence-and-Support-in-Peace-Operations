@@ -226,7 +226,9 @@ fig <- layout(
 fig
 
 ```
+
 # Testing Sigmajs
+
 ```{r}
 library(sigmajs)
 
@@ -235,6 +237,9 @@ set.seed(123)
 # generate data
 nodes <- sg_make_nodes(25) # 20 nodes
 edges <- sg_make_edges(nodes, 50) # 50 edges
+
+nodes <- nodes %>%
+  mutate(label = id)
 
 sigmajs() %>% # initialise
   sg_nodes(nodes, id, label, size) %>% # add nodes
@@ -245,6 +250,81 @@ sigmajs() %>% # initialise
   sg_neighbours() # show node neighbours on node click
 ```
 
+nodes data need:
+- id
+- label
+- size
+- color
 
+```{r}
+sg_nodes <- burundi_crs_2005 %>%
+  mutate(id = sender, group = sender_orgtype) %>%
+  select(id, group) %>%
+  bind_rows(
+    burundi_crs_2005 %>%
+      mutate(id = receiver, group = receiver_orgtype) %>%
+      select(id, group)
+    ) %>%
+  distinct(id, .keep_all = TRUE) %>%
+  mutate(label = id)
 
+sg_nodes <- sg_nodes %>%
+  mutate(size = 3,
+         color = "#000000") %>%
+  select(id, label, size, color, everything())
+```
+
+in the edges data i need:
+- id
+- source
+- target
+
+```{r}
+test_edges <- burundi_crs_2005 %>%
+  mutate(source = sender, target = receiver) %>%
+  select(id, source, target)
+
+test_edges <- test_edges%>%
+  mutate(id = 1:length(test_edges$id))
+```
+
+```{r}
+# this will be dependent on the user selection (pick one option)
+
+#option 1
+edges$value <- burundi_crs_2005$cost
+
+#option 2
+n_contract_sum <- burundi_crs_2005 %>%
+  group_by(sender, receiver) %>%
+  summarise(value = n_distinct(id), .groups = "drop") %>%
+  mutate(from = sender, to = receiver) %>%
+  select(from, to, value)
+
+edges <- left_join(edges, n_contract_sum, by = c("from", "to")) %>%
+  distinct(from, to, value, .keep_all = TRUE)
+```
+
+sigmajs() %>% # initialise
+  sg_nodes(nodes, id, label, size) %>% # add nodes
+  sg_edges(edges, id, source, target) %>% # add edges
+  sg_layout() %>%  # layout
+  sg_cluster() %>% # cluster
+  sg_drag_nodes() %>% # allows user to drag nodes
+  sg_neighbours() # show node neighbours on node click
+## sigma viz
+```{r}
+test_nodes <- sg_nodes
+test_edges <- sg_edges
+rm(sg_edges)
+
+sigmajs() %>%
+  sg_nodes(test_nodes, id, label, size, color) %>%
+  sg_edges(test_edges, id, source, target) %>%
+  sg_layout() %>%
+  sg_cluster() %>%
+  sg_drag_nodes() %>%
+  sg_neighbors() %>%
+  sg_settings(labelThreshold = 15) 
+```
 

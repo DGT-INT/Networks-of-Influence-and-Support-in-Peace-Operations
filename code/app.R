@@ -1,4 +1,4 @@
-# Shiny App for Custom Neural Networks
+# Shiny App for Custom Neural Networks // 
 
 library(shiny)
 library(visNetwork)
@@ -6,6 +6,7 @@ library(tidygraph)
 library(dplyr)
 library(tidyverse)
 library(DT)
+library(sigmajs)
 
 # Data Wrangling
 ## Note: I need to update the loop to automate on a larger scale when i get more data
@@ -153,7 +154,8 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                                      selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships)
                                      ),
                               column(8,
-                                     visNetworkOutput("network_visualization")
+                                     #visNetworkOutput("network_visualization")
+                                     sigmajsOutput("network_viz")
                                      )
                               ),
                             fluidRow(
@@ -200,7 +202,7 @@ server <- function(input, output) {
           select(id, group, title)
       ) %>%
       distinct(id, .keep_all = TRUE) %>%
-      mutate(label = id)
+      mutate(label = id, size = 2, color = "#000000")
     })
     
   }
@@ -208,9 +210,10 @@ server <- function(input, output) {
   ## Creating Edges Data Frame
   {
     edges <- reactive({
-      base_edges <- network_viz_data() %>%
-        mutate(from = sender, to = receiver, title = title_edges) %>%
-        select(from, to, title)
+      network_viz_data() %>%
+        mutate(id = row_number(),source = sender, target = receiver) %>%
+        select(id, source, target)
+      
     
     
     ### this will be dependent on the user selection (pick one option)
@@ -219,14 +222,14 @@ server <- function(input, output) {
 #    edges$value <- Burundi_CRS_all_years$cost
     
     #### option 2
-    n_contract_sum <- network_viz_data() %>%
-      group_by(sender, receiver, title_edges) %>%
-      summarise(value = n_distinct(id), .groups = "drop") %>%
-      mutate(from = sender, to = receiver, title = title_edges) %>%
-      select(from, to, value, title)
+#    n_contract_sum <- network_viz_data() %>%
+#      group_by(sender, receiver, title_edges) %>%
+#      summarise(value = n_distinct(id), .groups = "drop") %>%
+#      mutate(from = sender, to = receiver, title = title_edges) %>%
+#      select(from, to, value, title)
     
-    left_join(base_edges, n_contract_sum, by = c("from", "to", "title")) %>%
-      distinct(from, to, value, .keep_all = TRUE)
+#    left_join(base_edges, n_contract_sum, by = c("from", "to", "title")) %>%
+#      distinct(from, to, value, .keep_all = TRUE)
     })
   }
   
@@ -236,13 +239,24 @@ server <- function(input, output) {
   })
   
   ## Network Visualization
-  output$network_visualization <- renderVisNetwork({
-    visNetwork(nodes(), edges(), main = paste(input$select_country,"'s",input$select_dataframe," data from",input$years[1]," to",input$years[2])) %>%
-      visLayout(randomSeed = 123) %>%
-      visEdges(arrows = "to", shadow = TRUE) %>%
-      visLegend() %>%
-      visOptions(highlightNearest = TRUE)
+#  output$network_visualization <- renderVisNetwork({
+#    visNetwork(nodes(), edges(), main = paste(input$select_country,"'s",input$select_dataframe," data from",input$years[1]," to",input$years[2])) %>%
+#      visLayout(randomSeed = 123) %>%
+#      visEdges(arrows = "to", shadow = TRUE) %>%
+#      visLegend() %>%
+#      visOptions(highlightNearest = TRUE)
+#  })
+  
+  ## sigmajs
+  output$network_viz <- renderSigmajs({
+    sigmajs() %>%
+      sg_nodes(nodes(), id = "id" ,label = "id", size = "size", color= "color") %>%
+      sg_edges(edges(), id = "id", source= "source", target= "target") %>%
+      sg_layout()%>%
+      sg_settings(labelThreshold = 15) 
+    
   })
+  
   
   #testing panel
   
