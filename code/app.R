@@ -7,6 +7,7 @@ library(dplyr)
 library(tidyverse)
 library(DT)
 library(sigmajs)
+library(shinyjs)
 
 # Data Wrangling
 ## Note: I need to update the loop to automate on a larger scale when i get more data
@@ -147,15 +148,19 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                               column(4,
                                      selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe, selected = "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)" ),
                                      selectInput("select_country", "What country are you interested in?", choices= country),
-                                     sliderInput("years", "What time period are you interested in?", value= c(2012,2013), min = 2005, max = 2021),
+                                     sliderInput("years", "What time year are you interested in?", value = 2011, min = 2005, max = 2021),
                                      selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= sender_org_type, multiple = TRUE, selected = sender_org_type),
                                      selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= receiver_org_type, multiple = TRUE, selected = receiver_org_type),
                                      selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE),
                                      selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships)
                                      ),
                               column(8,
-                                     #visNetworkOutput("network_visualization")
-                                     sigmajsOutput("network_viz")
+                                     titlePanel("Network Visualization of Peace Operations"),
+                                     div(
+                                       style = "border: 2px solid #444; border-radius: 10px;",
+                                       sigmajsOutput("network_viz", height = "85vh", width = "100%")
+                                     )
+                                     
                                      )
                               ),
                             fluidRow(
@@ -184,8 +189,7 @@ server <- function(input, output) {
   {
     network_viz_data <- reactive({
       Burundi_CRS_all_years %>%
-        filter(Year >= input$years[1],
-               Year <= input$years[2],
+        filter(Year == input$years,
                sender_orgtype %in% input$select_sender_org_type,
                receiver_orgtype %in% input$select_receiver_org_type)
     })
@@ -211,8 +215,8 @@ server <- function(input, output) {
   {
     edges <- reactive({
       network_viz_data() %>%
-        mutate(id = row_number(),source = sender, target = receiver) %>%
-        select(id, source, target)
+        mutate(id = row_number(),source = sender, target = receiver, type = "arrow") %>%
+        select(id, source, target, type)
       
     
     
@@ -251,11 +255,17 @@ server <- function(input, output) {
   output$network_viz <- renderSigmajs({
     sigmajs() %>%
       sg_nodes(nodes(), id = "id" ,label = "id", size = "size", color= "color") %>%
-      sg_edges(edges(), id = "id", source= "source", target= "target") %>%
+      sg_edges(edges(), id = "id", source= "source", target= "target", type = "type") %>%
       sg_layout()%>%
-      sg_settings(labelThreshold = 15) 
+      sg_settings(labelThreshold = 13) %>%
+      sg_drag_nodes() %>%
+      sg_neighbors()
     
-  })
+    
+    }) 
+      
+    
+
   
   
   #testing panel
