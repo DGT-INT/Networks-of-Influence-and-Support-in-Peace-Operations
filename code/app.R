@@ -215,15 +215,14 @@ server <- function(input, output) {
   {
     edges <- reactive({
       network_viz_data() %>%
-        mutate(id = row_number(),source = sender, target = receiver, type = "arrow") %>%
-        select(id, source, target, type)
-      
-    
+        mutate(id = row_number(),source = sender, target = receiver, type = "arrow",
+               size = 100000000000000000000000^1000000 *100000000000000000000000^1000000 * 100000000000000000000000^1000000 *100000000000000000000000^1000000 * 100000000000000000000000^1000000 *100000000000000000000000^1000000 * cost) %>%
+        select(id, source, target, type, size)
     
     ### this will be dependent on the user selection (pick one option)
     
     #### option 1
-#    edges$value <- Burundi_CRS_all_years$cost
+#    edges$size <- Burundi_CRS_all_years$cost
     
     #### option 2
 #    n_contract_sum <- network_viz_data() %>%
@@ -255,13 +254,11 @@ server <- function(input, output) {
   output$network_viz <- renderSigmajs({
     sigmajs() %>%
       sg_nodes(nodes(), id = "id" ,label = "id", size = "size", color= "color") %>%
-      sg_edges(edges(), id = "id", source= "source", target= "target", type = "type") %>%
+      sg_edges(edges(), id = "id", source= "source", target= "target", type = "type", size = "size") %>%
       sg_layout()%>%
       sg_settings(labelThreshold = 13) %>%
       sg_drag_nodes() %>%
       sg_neighbors()
-    
-    
     }) 
       
     
