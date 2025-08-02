@@ -24,6 +24,48 @@ colombia_mptf <- readRDS("../data/Raw Data/col_result_mptf_nogovsig.rds")
 
 # Preprocessing
 ```{r}
+dataframe <- c("crs", "mptf")
+country_list <- c("burundi", "colombia")
+
+for (DATASET in dataframe) {
+
+for (COUNTRY in country_list) {
+  
+  COUNTRY_DATASET <- get(paste0(COUNTRY,"_", DATASET))
+
+years <- names(COUNTRY_DATASET[["edge_lists"]]) %>% 
+  as.numeric() %>% 
+  sort()
+
+first_year <- min(years)
+last_year  <- max(years)
+
+# subsetting country crs data by year
+for (i in first_year:last_year) {
+  COUNTRY_DATASET_i <- COUNTRY_DATASET[["edge_lists"]][[as.character(i)]]
+  
+  COUNTRY_DATASET_i <- COUNTRY_DATASET_i %>%
+    mutate(Country = COUNTRY, Year = i, data = DATASET)
+  
+  assign(paste0(COUNTRY,"_", DATASET,"_", i), COUNTRY_DATASET_i)
+}
+
+# appending to make 1 per country per dataset
+assign(
+  paste0(COUNTRY, "_", DATASET, "_all_years"),
+  bind_rows(mget(paste0(COUNTRY, "_", DATASET, "_", first_year:last_year)))
+)
+
+# cleaning the environment
+rm(list = paste0(COUNTRY, "_", DATASET, "_", first_year:last_year), COUNTRY_DATASET_i, COUNTRY_DATASET)
+rm(list = paste0(COUNTRY,"_",DATASET))
+}
+}
+```
+
+
+
+```{r}
 country_list <- c("burundi", "colombia")
 
 for (COUNTRY in country_list) {
@@ -57,117 +99,3 @@ assign(
 rm(list = paste0(COUNTRY, "_crs_", first_year:last_year), COUNTRY_crs_i, COUNTRY_crs)
 }
 ```
-
-```{r}
-years <- names(burundi_crs[["edge_lists"]]) %>% 
-  as.numeric() %>% 
-  sort()
-
-first_year <- min(years)
-last_year  <- max(years)
-
-# subsetting country crs data by year
-for (i in first_year:last_year) {
-  burundi_crs_i <- burundi_crs[["edge_lists"]][[as.character(i)]]
-  
-  burundi_crs_i <- burundi_crs_i %>%
-    mutate(Country = "Burundi", Year = i)
-  
-  assign(paste0("burundi_crs_", i), burundi_crs_i)
-}
-
-# appending to make 1 crs dataset per country
-burundi_crs_all_years <- bind_rows(
-  mget(paste0("burundi_crs_", first_year:last_year))
-)
-
-# cleaning the environment
-rm(list = paste0("burundi_crs_", first_year:last_year), burundi_crs_i, burundi_crs)
-```
-
-
-
-
-
-
-
-
-
-# (Burundi) Extracting and Binding MPTF data by Country
-years <- names(Burundi_MPTF[["edge_lists"]]) %>% 
-  as.numeric() %>% 
-  sort()
-
-first_year <- min(years)
-last_year  <- max(years)
-
-
-for (i in first_year:last_year) {
-  Burundi_MPTF_i <- Burundi_MPTF[["edge_lists"]][[as.character(i)]]
-  
-  Burundi_MPTF_i <- Burundi_MPTF_i %>%
-    mutate(Country = "Burundi", Year = i)
-  
-  assign(paste0("Burundi_MPTF_", i), Burundi_MPTF_i)
-}
-
-Burundi_MPTF_all_years <- bind_rows(
-  mget(paste0("Burundi_MPTF_", first_year:last_year))
-)
-
-rm(list = paste0("Burundi_MPTF_", first_year:last_year), Burundi_MPTF_i, Burundi_MPTF)
-
-#-------
-
-# (Colombia) Extracting and Binding CRS data by Country
-years <- names(Colombia_CRS[["edge_lists"]]) %>% 
-  as.numeric() %>% 
-  sort()
-
-first_year <- min(years)
-last_year  <- max(years)
-
-for (i in first_year:last_year) {
-  Colombia_CRS_i <- Colombia_CRS[["edge_lists"]][[as.character(i)]]
-  
-  Colombia_CRS_i <- Colombia_CRS_i %>%
-    mutate(Country = "Colombia", Year = i)
-  
-  assign(paste0("Colombia_CRS_", i), Colombia_CRS_i)
-}
-
-Colombia_CRS_all_years <- bind_rows(
-  mget(paste0("Colombia_CRS_", first_year:last_year))
-)
-
-rm(list = paste0("Colombia_CRS_", first_year:last_year), Colombia_CRS_i, Colombia_CRS)
-
-# (Colombia) Extracting and Binding MPTF data by Country
-years <- names(Colombia_MPTF[["edge_lists"]]) %>% 
-  as.numeric() %>% 
-  sort()
-
-first_year <- min(years)
-last_year  <- max(years)
-
-
-for (i in first_year:last_year) {
-  Colombia_MPTF_i <- Colombia_MPTF[["edge_lists"]][[as.character(i)]]
-  
-  Colombia_MPTF_i <- Colombia_MPTF_i %>%
-    mutate(Country = "Colombia", Year = i)
-  
-  assign(paste0("Colombia_MPTF_", i), Colombia_MPTF_i)
-}
-
-Colombia_MPTF_all_years <- bind_rows(
-  mget(paste0("Colombia_MPTF_", first_year:last_year))
-)
-
-rm(list = paste0("Colombia_MPTF_", first_year:last_year), Colombia_MPTF_i, Colombia_MPTF)
-
-}
-
-
-
-
