@@ -94,12 +94,37 @@ test_data <- final_data %>%
          Year == "2005")
 ```
 
+# Need to export 2 data frames, a node and a edge data frame
+- The node data frame needs a unique ID variable.
 ```{r}
-write_json(test_data, pretty = TRUE, path = "../data/Processed Data/test_data.json")
+test_data_nodes <- test_data %>%
+  mutate(id = sender, orgtype = sender_orgtype) %>%
+  select(id, orgtype) %>%
+  bind_rows(
+    test_data %>%
+      mutate(id = receiver, orgtype = receiver_orgtype) %>%
+      select(id, orgtype)
+  ) %>%
+  distinct(id, .keep_all = TRUE) %>%
+  mutate(label = id) %>%
+  select(id, label, orgtype)
 ```
 
+- the edge data frame needs:
+id
+source
+target
+type
+```{r}
+test_data_edges <- test_data %>%
+  mutate(source = sender, target = receiver, id = 1:length(test_data$sender), type = "arrow") %>%
+  select(id, source, target, type)
+```
 
-
-
-
+# Exporting data
+```{r}
+write_json(test_data, pretty = TRUE, path = "../data/Processed Data/test_data.json")
+write_json(test_data_nodes, pretty = TRUE, path = "../data/Processed Data/test_data_nodes.json")
+write_json(test_data_edges, pretty = TRUE, path = "../data/Processed Data/test_data_edges.json")
+```
 

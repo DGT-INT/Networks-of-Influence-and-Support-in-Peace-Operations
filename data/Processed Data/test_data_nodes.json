@@ -1,0 +1,277 @@
+[
+  {
+    "id": "United States Agency for International Development",
+    "label": "United States Agency for International Development",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "label": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "The Global Fund",
+    "label": "The Global Fund",
+    "orgtype": "IGO-FUND"
+  },
+  {
+    "id": "Swedish International Development Cooperation Agency",
+    "label": "Swedish International Development Cooperation Agency",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Ministry of Foreign Affairs - Netherlands",
+    "label": "Ministry of Foreign Affairs - Netherlands",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Unspecified Bilateral Government",
+    "label": "Unspecified Bilateral Government",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Swiss Agency for Development and Cooperation",
+    "label": "Swiss Agency for Development and Cooperation",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Austrian Development Agency",
+    "label": "Austrian Development Agency",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Unknown and Unspecified",
+    "label": "Unknown and Unspecified",
+    "orgtype": "Unknown"
+  },
+  {
+    "id": "Federal Public Service Foreign Affairs, Foreign Trade and Development Cooperation - Belgium",
+    "label": "Federal Public Service Foreign Affairs, Foreign Trade and Development Cooperation - Belgium",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Government of Walloon - Belgium",
+    "label": "Government of Walloon - Belgium",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "European Commission",
+    "label": "European Commission",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "Department for International Development - United Kingdom",
+    "label": "Department for International Development - United Kingdom",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Canadian International Development Agency",
+    "label": "Canadian International Development Agency",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Federal Ministry for Economic Cooperation and Development - Germany",
+    "label": "Federal Ministry for Economic Cooperation and Development - Germany",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "German Development Bank",
+    "label": "German Development Bank",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "African Development Fund",
+    "label": "African Development Fund",
+    "orgtype": "IGO-FUND"
+  },
+  {
+    "id": "Italian Agency for Development Cooperation",
+    "label": "Italian Agency for Development Cooperation",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "African Development Foundation - United States",
+    "label": "African Development Foundation - United States",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Government of Italy",
+    "label": "Government of Italy",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "FHI 360",
+    "label": "FHI 360",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Global Environment and Technology Foundation",
+    "label": "Global Environment and Technology Foundation",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Enabel - Belgium",
+    "label": "Enabel - Belgium",
+    "orgtype": "International company"
+  },
+  {
+    "id": "Alliance of Bioversity and CIAT",
+    "label": "Alliance of Bioversity and CIAT",
+    "orgtype": "International civil society"
+  },
+  {
+    "id": "International Institute of Tropical Agriculture",
+    "label": "International Institute of Tropical Agriculture",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Centro Internacional de Agricultura Tropical",
+    "label": "Centro Internacional de Agricultura Tropical",
+    "orgtype": "International civil society"
+  },
+  {
+    "id": "Programme National Lepre et Tuberculose",
+    "label": "Programme National Lepre et Tuberculose",
+    "orgtype": "GOV"
+  },
+  {
+    "id": "United Nations Development Programme",
+    "label": "United Nations Development Programme",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "International Procurement Agency",
+    "label": "International Procurement Agency",
+    "orgtype": "International company"
+  },
+  {
+    "id": "CARE International",
+    "label": "CARE International",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Catholic Organization for Relief and Development",
+    "label": "Catholic Organization for Relief and Development",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Healthnet TPO",
+    "label": "Healthnet TPO",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Finnish Society for Development Research",
+    "label": "Finnish Society for Development Research",
+    "orgtype": "International civil society"
+  },
+  {
+    "id": "United Nations Office for the Coordination of Humanitarian Affairs",
+    "label": "United Nations Office for the Coordination of Humanitarian Affairs",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "CARE Österreich",
+    "label": "CARE Österreich",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "CARE Nederland",
+    "label": "CARE Nederland",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Norwegian Church Aid",
+    "label": "Norwegian Church Aid",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Unspecified National NGO",
+    "label": "Unspecified National NGO",
+    "orgtype": "NNGO"
+  },
+  {
+    "id": "United Nations High Commissioner for Refugees",
+    "label": "United Nations High Commissioner for Refugees",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "United Nations Children's Fund",
+    "label": "United Nations Children's Fund",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "World Food Programme",
+    "label": "World Food Programme",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "Food and Agriculture Organization of the United Nations",
+    "label": "Food and Agriculture Organization of the United Nations",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "European Centre for Development Policy Management",
+    "label": "European Centre for Development Policy Management",
+    "orgtype": "International civil society"
+  },
+  {
+    "id": "Caritas International Belgium",
+    "label": "Caritas International Belgium",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "United Nations Children's Fund - Belgium Committee",
+    "label": "United Nations Children's Fund - Belgium Committee",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Unspecified Multilateral Institution",
+    "label": "Unspecified Multilateral Institution",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "Unspecified International NGO",
+    "label": "Unspecified International NGO",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "Development and Peace - Caritas Canada",
+    "label": "Development and Peace - Caritas Canada",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "CGIAR",
+    "label": "CGIAR",
+    "orgtype": "International civil society"
+  },
+  {
+    "id": "Association of Universities and Colleges of Canada",
+    "label": "Association of Universities and Colleges of Canada",
+    "orgtype": "International civil society"
+  },
+  {
+    "id": "Norwegian Refugee Council",
+    "label": "Norwegian Refugee Council",
+    "orgtype": "INGO"
+  },
+  {
+    "id": "United Nations Mine Action Service",
+    "label": "United Nations Mine Action Service",
+    "orgtype": "IGO"
+  },
+  {
+    "id": "8xMILLE - Italy",
+    "label": "8xMILLE - Italy",
+    "orgtype": "Bilateral donor or actor"
+  },
+  {
+    "id": "Chemonics International",
+    "label": "Chemonics International",
+    "orgtype": "International company"
+  },
+  {
+    "id": "Finnish Red Cross",
+    "label": "Finnish Red Cross",
+    "orgtype": "INGO"
+  }
+]

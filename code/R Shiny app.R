@@ -12,11 +12,11 @@ library(shinyjs)
 # Data Wrangling
 ## Note: I need to update the loop to automate on a larger scale when i get more data
 {
-Burundi_CRS <- readRDS("../data/bdi_result_crs.rds")
-Colombia_CRS <- readRDS("../data/col_result_crs.rds")
+Burundi_CRS <- readRDS("../data/Raw Data/bdi_result_crs.rds")
+Colombia_CRS <- readRDS("../data/Raw Data/col_result_crs.rds")
 
-Burundi_MPTF <- readRDS("../data/bdi_result_mptf_nogovsig.rds")
-Colombia_MPTF <- readRDS("../data/col_result_mptf_nogovsig.rds")
+Burundi_MPTF <- readRDS("../data/Raw Data/bdi_result_mptf_nogovsig.rds")
+Colombia_MPTF <- readRDS("../data/Raw Data/col_result_mptf_nogovsig.rds")
 
 # (Burundi) Extracting and Binding CRS data by Country
 years <- names(Burundi_CRS[["edge_lists"]]) %>% 
