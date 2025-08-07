@@ -107,7 +107,7 @@ test_data_nodes <- test_data %>%
   ) %>%
   distinct(id, .keep_all = TRUE) %>%
   mutate(label = id) %>%
-  select(id, label, orgtype)
+  select(id, label) # deselected orgtype for now
 ```
 
 - the edge data frame needs:
@@ -118,8 +118,15 @@ type
 ```{r}
 test_data_edges <- test_data %>%
   mutate(source = sender, target = receiver, id = 1:length(test_data$sender), type = "arrow") %>%
-  select(id, source, target, type)
+  select(id, source, target) # deselected type for now
 ```
+
+# Checking if ID variables are unique
+```{r}
+any(duplicated(test_data_nodes$id))
+any(duplicated(test_data_edges$id))
+```
+
 
 # Exporting data
 ```{r}
