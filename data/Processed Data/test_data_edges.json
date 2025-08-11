@@ -1,537 +1,332 @@
 [
   {
-    "id": 1,
-    "source": "United States Agency for International Development",
-    "target": "FHI 360"
-  },
-  {
-    "id": 2,
-    "source": "United States Agency for International Development",
-    "target": "Global Environment and Technology Foundation"
-  },
-  {
-    "id": 3,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Enabel - Belgium"
-  },
-  {
-    "id": 4,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Alliance of Bioversity and CIAT"
-  },
-  {
-    "id": 5,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "International Institute of Tropical Agriculture"
-  },
-  {
-    "id": 6,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Centro Internacional de Agricultura Tropical"
-  },
-  {
-    "id": 7,
-    "source": "The Global Fund",
-    "target": "Programme National Lepre et Tuberculose"
-  },
-  {
-    "id": 8,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Alliance of Bioversity and CIAT"
-  },
-  {
-    "id": 9,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "International Institute of Tropical Agriculture"
-  },
-  {
-    "id": 10,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Centro Internacional de Agricultura Tropical"
-  },
-  {
-    "id": 11,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Alliance of Bioversity and CIAT"
-  },
-  {
-    "id": 12,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "International Institute of Tropical Agriculture"
-  },
-  {
-    "id": 13,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Centro Internacional de Agricultura Tropical"
-  },
-  {
-    "id": 14,
-    "source": "United States Agency for International Development",
-    "target": "FHI 360"
-  },
-  {
-    "id": 15,
-    "source": "United States Agency for International Development",
-    "target": "Global Environment and Technology Foundation"
-  },
-  {
-    "id": 16,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "United Nations Development Programme"
-  },
-  {
-    "id": 17,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 18,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "International Procurement Agency"
-  },
-  {
-    "id": 19,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "CARE International"
-  },
-  {
-    "id": 20,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Catholic Organization for Relief and Development"
-  },
-  {
-    "id": 21,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Healthnet TPO"
-  },
-  {
-    "id": 22,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Catholic Organization for Relief and Development"
-  },
-  {
-    "id": 23,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 24,
-    "source": "Unspecified Bilateral Government",
-    "target": "Finnish Society for Development Research"
-  },
-  {
-    "id": 25,
-    "source": "Swiss Agency for Development and Cooperation",
-    "target": "United Nations Office for the Coordination of Humanitarian Affairs"
-  },
-  {
-    "id": 26,
-    "source": "Austrian Development Agency",
-    "target": "CARE Österreich"
-  },
-  {
-    "id": 27,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Enabel - Belgium"
-  },
-  {
-    "id": 28,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "International Procurement Agency"
-  },
-  {
-    "id": 29,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 30,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "CARE Nederland"
-  },
-  {
-    "id": 31,
-    "source": "Unspecified Bilateral Government",
-    "target": "Norwegian Church Aid"
-  },
-  {
-    "id": 32,
-    "source": "Unknown and Unspecified",
-    "target": "Norwegian Church Aid"
-  },
-  {
-    "id": 33,
-    "source": "Unspecified Bilateral Government",
-    "target": "United Nations Development Programme"
-  },
-  {
-    "id": 34,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Unspecified National NGO"
-  },
-  {
-    "id": 35,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Enabel - Belgium"
-  },
-  {
-    "id": 36,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Unspecified National NGO"
-  },
-  {
-    "id": 37,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Catholic Organization for Relief and Development"
-  },
-  {
-    "id": 38,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Healthnet TPO"
-  },
-  {
-    "id": 39,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 40,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "United Nations Office for the Coordination of Humanitarian Affairs"
-  },
-  {
-    "id": 41,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 42,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "United Nations Office for the Coordination of Humanitarian Affairs"
-  },
-  {
-    "id": 43,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "United Nations High Commissioner for Refugees"
-  },
-  {
-    "id": 44,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "United Nations Children's Fund"
-  },
-  {
-    "id": 45,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "World Food Programme"
-  },
-  {
-    "id": 46,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Unspecified National NGO"
-  },
-  {
-    "id": 47,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Unspecified National NGO"
-  },
-  {
-    "id": 48,
-    "source": "Unspecified Bilateral Government",
-    "target": "Unspecified National NGO"
-  },
-  {
-    "id": 49,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Food and Agriculture Organization of the United Nations"
-  },
-  {
-    "id": 50,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "European Centre for Development Policy Management"
-  },
-  {
-    "id": 51,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium"
-  },
-  {
-    "id": 52,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Caritas International Belgium"
-  },
-  {
-    "id": 53,
-    "source": "Ministry of Foreign Affairs - Netherlands",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 54,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 55,
-    "source": "Federal Public Service Foreign Affairs, Foreign Trade and Development Cooperation - Belgium",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 56,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 57,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 58,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 59,
-    "source": "Government of Walloon - Belgium",
-    "target": "United Nations Children's Fund - Belgium Committee"
-  },
-  {
-    "id": 60,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 61,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 62,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 63,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 64,
-    "source": "Federal Public Service Foreign Affairs, Foreign Trade and Development Cooperation - Belgium",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 65,
-    "source": "Federal Public Service Foreign Affairs, Foreign Trade and Development Cooperation - Belgium",
-    "target": "Unspecified National NGO"
-  },
-  {
-    "id": 66,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 67,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unspecified Multilateral Institution"
-  },
-  {
-    "id": 68,
-    "source": "Government of Walloon - Belgium",
-    "target": "Unspecified International NGO"
-  },
-  {
-    "id": 69,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 70,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 71,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unspecified Multilateral Institution"
-  },
-  {
-    "id": 72,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 73,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Food and Agriculture Organization of the United Nations"
-  },
-  {
-    "id": 74,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unspecified Multilateral Institution"
-  },
-  {
-    "id": 75,
-    "source": "European Commission",
-    "target": "Unspecified International NGO"
-  },
-  {
-    "id": 76,
-    "source": "Austrian Development Agency",
-    "target": "CARE Österreich"
-  },
-  {
-    "id": 77,
-    "source": "Department for International Development - United Kingdom",
-    "target": "Unspecified National NGO"
-  },
-  {
-    "id": 78,
-    "source": "Canadian International Development Agency",
-    "target": "Development and Peace - Caritas Canada"
-  },
-  {
-    "id": 79,
-    "source": "Canadian International Development Agency",
-    "target": "Development and Peace - Caritas Canada"
-  },
-  {
-    "id": 80,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "CGIAR"
-  },
-  {
-    "id": 81,
-    "source": "Federal Ministry for Economic Cooperation and Development - Germany",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 82,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Unknown and Unspecified"
-  },
-  {
-    "id": 83,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Enabel - Belgium"
-  },
-  {
-    "id": 84,
-    "source": "German Development Bank",
-    "target": "German Development Bank"
-  },
-  {
-    "id": 85,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium"
-  },
-  {
-    "id": 86,
-    "source": "Canadian International Development Agency",
-    "target": "Association of Universities and Colleges of Canada"
-  },
-  {
-    "id": 87,
-    "source": "Swedish International Development Cooperation Agency",
-    "target": "Norwegian Refugee Council"
-  },
-  {
-    "id": 88,
-    "source": "Department for International Development - United Kingdom",
-    "target": "United Nations Mine Action Service"
-  },
-  {
-    "id": 89,
-    "source": "The Global Fund",
-    "target": "Programme National Lepre et Tuberculose"
-  },
-  {
-    "id": 90,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Enabel - Belgium"
+    "id": 93,
+    "source": "African Development Foundation - United States",
+    "target": "Unspecified National NGO",
+    "n_contracts": 1
   },
   {
     "id": 91,
     "source": "African Development Fund",
-    "target": "Unspecified National NGO"
+    "target": "Unspecified National NGO",
+    "n_contracts": 1
   },
   {
-    "id": 92,
-    "source": "Italian Agency for Development Cooperation",
-    "target": "Unspecified National NGO"
+    "id": 26,
+    "source": "Austrian Development Agency",
+    "target": "CARE Österreich",
+    "n_contracts": 2
   },
   {
-    "id": 93,
-    "source": "African Development Foundation - United States",
-    "target": "Unspecified National NGO"
+    "id": 86,
+    "source": "Canadian International Development Agency",
+    "target": "Association of Universities and Colleges of Canada",
+    "n_contracts": 1
   },
   {
-    "id": 94,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Alliance of Bioversity and CIAT"
+    "id": 78,
+    "source": "Canadian International Development Agency",
+    "target": "Development and Peace - Caritas Canada",
+    "n_contracts": 2
   },
   {
-    "id": 95,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "International Institute of Tropical Agriculture"
+    "id": 88,
+    "source": "Department for International Development - United Kingdom",
+    "target": "United Nations Mine Action Service",
+    "n_contracts": 1
   },
   {
-    "id": 96,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Centro Internacional de Agricultura Tropical"
-  },
-  {
-    "id": 97,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Enabel - Belgium"
-  },
-  {
-    "id": 98,
-    "source": "The Global Fund",
-    "target": "Programme National Lepre et Tuberculose"
-  },
-  {
-    "id": 99,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Enabel - Belgium"
+    "id": 77,
+    "source": "Department for International Development - United Kingdom",
+    "target": "Unspecified National NGO",
+    "n_contracts": 1
   },
   {
     "id": 100,
     "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "8xMILLE - Italy"
+    "target": "8xMILLE - Italy",
+    "n_contracts": 1
   },
   {
-    "id": 101,
-    "source": "Government of Italy",
-    "target": "Enabel - Belgium"
+    "id": 4,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "Alliance of Bioversity and CIAT",
+    "n_contracts": 5
+  },
+  {
+    "id": 80,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "CGIAR",
+    "n_contracts": 1
+  },
+  {
+    "id": 52,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "Caritas International Belgium",
+    "n_contracts": 1
+  },
+  {
+    "id": 6,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "Centro Internacional de Agricultura Tropical",
+    "n_contracts": 5
+  },
+  {
+    "id": 51,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "n_contracts": 2
+  },
+  {
+    "id": 3,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "Enabel - Belgium",
+    "n_contracts": 7
+  },
+  {
+    "id": 50,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "European Centre for Development Policy Management",
+    "n_contracts": 1
+  },
+  {
+    "id": 5,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "International Institute of Tropical Agriculture",
+    "n_contracts": 5
+  },
+  {
+    "id": 34,
+    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
+    "target": "Unspecified National NGO",
+    "n_contracts": 4
+  },
+  {
+    "id": 75,
+    "source": "European Commission",
+    "target": "Unspecified International NGO",
+    "n_contracts": 1
+  },
+  {
+    "id": 81,
+    "source": "Federal Ministry for Economic Cooperation and Development - Germany",
+    "target": "Unknown and Unspecified",
+    "n_contracts": 1
+  },
+  {
+    "id": 55,
+    "source": "Federal Public Service Foreign Affairs, Foreign Trade and Development Cooperation - Belgium",
+    "target": "Unknown and Unspecified",
+    "n_contracts": 2
+  },
+  {
+    "id": 65,
+    "source": "Federal Public Service Foreign Affairs, Foreign Trade and Development Cooperation - Belgium",
+    "target": "Unspecified National NGO",
+    "n_contracts": 1
+  },
+  {
+    "id": 84,
+    "source": "German Development Bank",
+    "target": "German Development Bank",
+    "n_contracts": 1
   },
   {
     "id": 102,
     "source": "Government of Italy",
-    "target": "8xMILLE - Italy"
+    "target": "8xMILLE - Italy",
+    "n_contracts": 1
   },
   {
-    "id": 103,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Alliance of Bioversity and CIAT"
+    "id": 101,
+    "source": "Government of Italy",
+    "target": "Enabel - Belgium",
+    "n_contracts": 1
   },
   {
-    "id": 104,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "International Institute of Tropical Agriculture"
+    "id": 59,
+    "source": "Government of Walloon - Belgium",
+    "target": "United Nations Children's Fund - Belgium Committee",
+    "n_contracts": 1
   },
   {
-    "id": 105,
-    "source": "Directorate-General for Development Cooperation and Humanitarian Aid - Belgium",
-    "target": "Centro Internacional de Agricultura Tropical"
+    "id": 68,
+    "source": "Government of Walloon - Belgium",
+    "target": "Unspecified International NGO",
+    "n_contracts": 1
+  },
+  {
+    "id": 92,
+    "source": "Italian Agency for Development Cooperation",
+    "target": "Unspecified National NGO",
+    "n_contracts": 1
+  },
+  {
+    "id": 19,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "CARE International",
+    "n_contracts": 1
+  },
+  {
+    "id": 30,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "CARE Nederland",
+    "n_contracts": 1
+  },
+  {
+    "id": 20,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "Catholic Organization for Relief and Development",
+    "n_contracts": 3
+  },
+  {
+    "id": 49,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "Food and Agriculture Organization of the United Nations",
+    "n_contracts": 1
+  },
+  {
+    "id": 21,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "Healthnet TPO",
+    "n_contracts": 2
+  },
+  {
+    "id": 18,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "International Procurement Agency",
+    "n_contracts": 2
+  },
+  {
+    "id": 44,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "United Nations Children's Fund",
+    "n_contracts": 1
+  },
+  {
+    "id": 43,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "United Nations High Commissioner for Refugees",
+    "n_contracts": 1
+  },
+  {
+    "id": 42,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "United Nations Office for the Coordination of Humanitarian Affairs",
+    "n_contracts": 1
+  },
+  {
+    "id": 17,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "Unknown and Unspecified",
+    "n_contracts": 4
+  },
+  {
+    "id": 45,
+    "source": "Ministry of Foreign Affairs - Netherlands",
+    "target": "World Food Programme",
+    "n_contracts": 1
+  },
+  {
+    "id": 73,
+    "source": "Swedish International Development Cooperation Agency",
+    "target": "Food and Agriculture Organization of the United Nations",
+    "n_contracts": 1
+  },
+  {
+    "id": 87,
+    "source": "Swedish International Development Cooperation Agency",
+    "target": "Norwegian Refugee Council",
+    "n_contracts": 1
+  },
+  {
+    "id": 16,
+    "source": "Swedish International Development Cooperation Agency",
+    "target": "United Nations Development Programme",
+    "n_contracts": 1
+  },
+  {
+    "id": 40,
+    "source": "Swedish International Development Cooperation Agency",
+    "target": "United Nations Office for the Coordination of Humanitarian Affairs",
+    "n_contracts": 1
+  },
+  {
+    "id": 29,
+    "source": "Swedish International Development Cooperation Agency",
+    "target": "Unknown and Unspecified",
+    "n_contracts": 15
+  },
+  {
+    "id": 67,
+    "source": "Swedish International Development Cooperation Agency",
+    "target": "Unspecified Multilateral Institution",
+    "n_contracts": 3
+  },
+  {
+    "id": 25,
+    "source": "Swiss Agency for Development and Cooperation",
+    "target": "United Nations Office for the Coordination of Humanitarian Affairs",
+    "n_contracts": 1
+  },
+  {
+    "id": 7,
+    "source": "The Global Fund",
+    "target": "Programme National Lepre et Tuberculose",
+    "n_contracts": 3
   },
   {
     "id": 106,
     "source": "United States Agency for International Development",
-    "target": "Chemonics International"
+    "target": "Chemonics International",
+    "n_contracts": 1
+  },
+  {
+    "id": 1,
+    "source": "United States Agency for International Development",
+    "target": "FHI 360",
+    "n_contracts": 2
+  },
+  {
+    "id": 2,
+    "source": "United States Agency for International Development",
+    "target": "Global Environment and Technology Foundation",
+    "n_contracts": 2
+  },
+  {
+    "id": 32,
+    "source": "Unknown and Unspecified",
+    "target": "Norwegian Church Aid",
+    "n_contracts": 1
   },
   {
     "id": 107,
     "source": "Unspecified Bilateral Government",
-    "target": "Finnish Red Cross"
+    "target": "Finnish Red Cross",
+    "n_contracts": 1
+  },
+  {
+    "id": 24,
+    "source": "Unspecified Bilateral Government",
+    "target": "Finnish Society for Development Research",
+    "n_contracts": 1
+  },
+  {
+    "id": 31,
+    "source": "Unspecified Bilateral Government",
+    "target": "Norwegian Church Aid",
+    "n_contracts": 1
+  },
+  {
+    "id": 33,
+    "source": "Unspecified Bilateral Government",
+    "target": "United Nations Development Programme",
+    "n_contracts": 1
+  },
+  {
+    "id": 48,
+    "source": "Unspecified Bilateral Government",
+    "target": "Unspecified National NGO",
+    "n_contracts": 1
   }
 ]

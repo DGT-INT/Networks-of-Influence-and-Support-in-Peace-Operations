@@ -1,3 +1,4 @@
+      
       // Importing data
       Promise.all([
         fetch("../data/Processed Data/test_data_nodes.json").then(res => res.json()),
@@ -17,16 +18,18 @@
       const graph = new graphology.Graph();
 
       // Create nodes
-      graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10, color: "blue" });
-      graph.addNode("2", { label: "Node 2", x: 1, y: 1, size: 20, color: "red" });
-      graph.addNode("3", { label: "Node 3", x: 0, y: 1, size: 10, color: "green" });
-      graph.addNode("4", { label: "Node 4", x: 0.75, y: 0.25, size: 10, color: "gold" });
+      graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10 });
+      graph.addNode("2", { label: "Node 2", x: 1, y: 1, size: 20 });
+      graph.addNode("3", { label: "Node 3", x: 0, y: 1, size: 10 });
+      graph.addNode("4", { label: "Node 4", x: 0.75, y: 0.25, size: 10 });
 
 
 
       // Create edges
       graph.addEdge("1", "2", { size: 5, color: "purple" });
       graph.addEdge("3", "2", { size: 5, color: "brown" });
+
+      
 
 
       // Instantiate sigma.js and render the graph

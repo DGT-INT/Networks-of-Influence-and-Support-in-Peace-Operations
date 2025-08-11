@@ -127,6 +127,19 @@ any(duplicated(test_data_nodes$id))
 any(duplicated(test_data_edges$id))
 ```
 
+# Handling duplicated edges
+Duplicate edges clusers the visual and gives a hairball appearance.
+```{r}
+any(duplicated(test_data_edges$source, test_data_edges$target))
+```
+
+```{r}
+test_data_edges <- test_data_edges %>%
+  group_by(source, target) %>%
+  mutate(n_contracts = n()) %>%
+  slice(1) %>%
+  ungroup()
+```
 
 # Exporting data
 ```{r}
