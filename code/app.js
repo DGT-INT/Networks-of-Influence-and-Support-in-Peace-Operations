@@ -88,6 +88,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// adding filters
+
+const slider = document.getElementById('contractsSlider');
+const sliderValue = document.getElementById('sliderValue');
+
+slider.addEventListener('input', function() {
+  const minContracts = parseInt(this.value, 10);
+  sliderValue.textContent = minContracts;
+
+  // Show all elements first
+  cy.elements().show();
+
+  // Hide edges below threshold
+  cy.edges().forEach(edge => {
+    if (edge.data('weight') < minContracts) {
+      edge.hide();
+    }
+  });
+
+  // Optionally hide nodes that are now disconnected
+  cy.nodes().forEach(node => {
+    if (node.connectedEdges(':visible').length === 0) {
+      node.hide();
+    }
+  });
+});
+
+
 
 
 
