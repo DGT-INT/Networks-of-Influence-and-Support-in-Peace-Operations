@@ -24,7 +24,19 @@ document.addEventListener("DOMContentLoaded", () => {
           edges: edges
         },
         layout: {
-          name: 'cose' // force-directed layout
+          name: 'fcose',
+          quality: 'default',        // good balance between speed and precision
+          randomize: true,           // start positions randomized
+          animate: true,             // smooth animation to positions
+          animationDuration: 1000,   // 1 second animation
+          nodeSeparation: 200,       // bigger separation between nodes
+          idealEdgeLength: 250,      // longer edges = more spread out
+          edgeElasticity: 0.45,      // how stretchy edges are
+          gravity: 0.1,               // low gravity to avoid pulling too tight
+          gravityRange: 3.8,          // how far gravity spreads its influence
+          initialEnergyOnIncremental: 0.8, // helps avoid sudden clumps
+          coolingFactor: 0.95,       // slows movement for a stable final layout
+          nestingFactor: 0.8,        // keeps compound nodes more compact
         },
         style: [
           {
@@ -75,5 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error loading JSON:", error);
     });
 });
+
+
 
 
