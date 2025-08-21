@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(purrr)
 library(jsonlite)
+library(visNetwork)
+library(openxlsx)
 ```
 # Importing Raw Data
 ```{r}
@@ -86,7 +88,7 @@ for (COUNTRY in country_list) {
 rm(list = setdiff(ls(), "final_data"))
 ```
 
-# filtering data to run test in JavaScript and saving
+# filtering data to run test and saving
 ```{r}
 test_data <- final_data %>%
   filter(Country == "burundi",
@@ -94,57 +96,93 @@ test_data <- final_data %>%
          Year == "2005")
 ```
 
-# Need to export 2 data frames, a node and a edge data frame
-- The node data frame needs a unique ID variable.
+# running test with data in visnetwork
 ```{r}
-test_data_nodes <- test_data %>%
-  mutate(id = sender, orgtype = sender_orgtype) %>%
-  select(id, orgtype) %>%
+glimpse(test_data)
+```
+```{r}
+test_data <- test_data %>%
+  mutate(cost = as.numeric(cost),
+         n_contracts = as.numeric(n_contracts),
+         )
+
+glimpse(test_data)
+```
+
+
+## Creating (test) Nodes Data
+
+for the nodes dataframe i need:
+- id = Sender and Receiver uniquely appended
+- label = id
+- group = organization types uniquely appended
+
+```{r}
+test_nodes <- test_data %>%
+  mutate(id = sender, group = sender_orgtype) %>%
+  select(id, group) %>%
   bind_rows(
     test_data %>%
-      mutate(id = receiver, orgtype = receiver_orgtype) %>%
-      select(id, orgtype)
+      mutate(id = receiver, group = receiver_orgtype) %>%
+      select(id, group)
   ) %>%
   distinct(id, .keep_all = TRUE) %>%
-  mutate(label = id) %>%
-  select(id, label) # deselected orgtype for now
+  mutate(label = id)
 ```
 
-- the edge data frame needs:
-id
-source
-target
-type
-```{r}
-test_data_edges <- test_data %>%
-  mutate(source = sender, target = receiver, id = 1:length(test_data$sender), type = "arrow") %>%
-  select(id, source, target) # deselected type for now
-```
+## Creating (test) Edges Data
 
-# Checking if ID variables are unique
-```{r}
-any(duplicated(test_data_nodes$id))
-any(duplicated(test_data_edges$id))
-```
-
-# Handling duplicated edges
-Duplicate edges clusers the visual and gives a hairball appearance.
-```{r}
-any(duplicated(test_data_edges$source, test_data_edges$target))
-```
+For the edges, I will need:
+- from = sender
+- to = receiver
+- value = (for now this will be the number of contracts. In the shiny app this will be customizeable between cost too)
+- title = This can be a custom message. something saying "this is a contract from <sender> to <receiver>. the contract id is <id>. the number of contract between them is <n_contracts>. the sector is <sector>.
 
 ```{r}
-test_data_edges <- test_data_edges %>%
-  group_by(source, target) %>%
-  mutate(n_contracts = n()) %>%
-  slice(1) %>%
-  ungroup()
+test_edges <- test_data %>%
+  mutate(from = sender, to = receiver) %>%
+  select(from, to)
 ```
+
+### edges weight variable
+```{r}
+test_edges1 <- test_edges %>%
+  group_by(from, to) %>%
+  mutate(value = n())%>%
+  ungroup() %>%
+  distinct(from, to, value, .keep_all = TRUE)
+```
+
+## Creating (test) Visual
+```{r}
+visNetwork(test_nodes, test_edges1) %>%
+  visLayout(randomSeed = 123) %>%
+  visEdges(arrows = "to") %>%
+  visOptions(highlightNearest = TRUE)
+```
+
 
 # Exporting data
 ```{r}
-write_json(test_data, pretty = TRUE, path = "../data/Processed Data/test_data.json")
-write_json(test_data_nodes, pretty = TRUE, path = "../data/Processed Data/test_data_nodes.json")
-write_json(test_data_edges, pretty = TRUE, path = "../data/Processed Data/test_data_edges.json")
+saveRDS(test_data, "../data/Processed Data/test_data.rds")
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
