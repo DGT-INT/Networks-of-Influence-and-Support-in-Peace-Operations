@@ -7,6 +7,7 @@ library(dplyr)
 library(tidyverse)
 library(DT)
 library(shinyjs)
+library(glue)
 
 # Importing Proccessed Data
 {
@@ -84,14 +85,15 @@ server <- function(input, output) {
     nodes <- reactive({
       master_data %>%
         mutate(id = sender, group = sender_orgtype) %>%
-        select(id, group) %>%
+        select(id, group, sector) %>%
         bind_rows(
           master_data %>%
             mutate(id = receiver, group = receiver_orgtype) %>%
-            select(id, group)
+            select(id, group, sector)
         ) %>%
         distinct(id, .keep_all = TRUE) %>%
-        mutate(label = id)
+        mutate(label = id,
+               title = glue("The organization is {id}. They are a {group} type of organization within the {sector} sector."))
     })
   }
   
