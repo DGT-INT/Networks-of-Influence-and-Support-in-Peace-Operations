@@ -97,11 +97,15 @@ server <- function(input, output) {
   
   output$nodes_dataframe <- renderPrint(head(nodes()))
   
-  ## Creating Edges Data Frame for the Visual
+  ## Creating Edges Data Frame for the Visual (weighted with number of contracts)
   edges <- reactive({ 
     master_data %>%
       mutate(from = sender, to = receiver) %>%
-      select(from, to)
+      select(from, to) %>%
+      group_by(from, to) %>%
+      mutate(value = n())%>%
+      ungroup() %>%
+      distinct(from, to, value, .keep_all = TRUE)
     })
   
   output$edges_dataframe <- renderPrint(head(edges()))
@@ -109,7 +113,10 @@ server <- function(input, output) {
   
   ## Visual
   output$network_viz <- renderVisNetwork({
-    visNetwork(nodes(), edges())
+    visNetwork(nodes(), edges()) %>%
+      visLayout(randomSeed = 123) %>%
+      visEdges(arrows = "to") %>%
+      visOptions(highlightNearest = TRUE)
   })
   
   
