@@ -20,8 +20,8 @@ country <- c("Burundi", "Colombia")
 dataframe <- c("United Nations Multi-Partner Trust Fund (MPTF) documents",
                "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)",
                "International Aid Transparency Initiative (IATI)")
-#sender_org_type <- unique(Burundi_CRS_all_years$sender_orgtype)
-#receiver_org_type <- unique(Burundi_CRS_all_years$receiver_orgtype)
+sender_org_type <- unique(master_data$sender_orgtype)
+receiver_org_type <- unique(master_data$receiver_orgtype)
 #sector <- unique(Burundi_CRS_all_years$sector)
 relationships <- c("relationship 1", "relationship 2", "relationship 3")
 }
@@ -41,8 +41,9 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                                      selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe, selected = "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)" ),
                                      selectInput("select_country", "What country are you interested in?", choices= country),
                                      sliderInput("years", "What time year are you interested in?", value = 2011, min = 2005, max = 2021),
-                                     #selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= sender_org_type, multiple = TRUE, selected = sender_org_type),
-                                     #selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= receiver_org_type, multiple = TRUE, selected = receiver_org_type),
+                                     h4("Filter Based on Nodes"),
+                                     selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= sender_org_type, multiple = TRUE, selected = sender_org_type),
+                                     selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= receiver_org_type, multiple = TRUE, selected = receiver_org_type),
                                      #selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE),
                                      selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships)
                                      ),
@@ -84,10 +85,12 @@ server <- function(input, output) {
   {
     nodes <- reactive({
       master_data %>%
+        filter(sender_orgtype %in% input$select_sender_org_type) %>%
         mutate(id = sender, group = sender_orgtype) %>%
         select(id, group, sector) %>%
         bind_rows(
           master_data %>%
+            filter(receiver_orgtype %in% input$select_receiver_org_type) %>%
             mutate(id = receiver, group = receiver_orgtype) %>%
             select(id, group, sector)
         ) %>%
@@ -118,7 +121,9 @@ server <- function(input, output) {
     visNetwork(nodes(), edges()) %>%
       visLayout(randomSeed = 123) %>%
       visEdges(arrows = "to") %>%
-      visOptions(highlightNearest = TRUE)
+      visOptions(highlightNearest = TRUE) %>%
+      visLegend(position = "right", main = "Organization Type") %>%
+      visInteraction(navigationButtons = TRUE)
   })
   
   
