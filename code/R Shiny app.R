@@ -110,7 +110,8 @@ server <- function(input, output) {
       group_by(from, to) %>%
       mutate(value = n())%>%
       ungroup() %>%
-      distinct(from, to, value, .keep_all = TRUE)
+      distinct(from, to, value, .keep_all = TRUE) %>%
+      mutate(title = glue("This relationship represents {value} contracts <br> from {from} <br> to {to}."))
     })
   
   output$edges_dataframe <- renderPrint(head(edges()))
@@ -120,7 +121,9 @@ server <- function(input, output) {
   output$network_viz <- renderVisNetwork({
     visNetwork(nodes(), edges()) %>%
       visLayout(randomSeed = 123) %>%
-      visEdges(arrows = "to") %>%
+      visEdges(arrows = "to",
+               shadow = TRUE,
+               color = list(color = "#038a81", highlight = "red")) %>%
       visOptions(highlightNearest = TRUE) %>%
       visLegend(position = "right", main = "Organization Type") %>%
       visInteraction(navigationButtons = TRUE)
