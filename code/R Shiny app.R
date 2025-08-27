@@ -40,10 +40,12 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                                      h4("Filter Based on Data"),
                                      selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe, selected = "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)" ),
                                      selectInput("select_country", "What country are you interested in?", choices= country),
-                                     sliderInput("years", "What time year are you interested in?", value = 2011, min = 2005, max = 2021),
                                      h4("Filter Based on Nodes"),
                                      selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= sender_org_type, multiple = TRUE, selected = sender_org_type),
                                      selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= receiver_org_type, multiple = TRUE, selected = receiver_org_type),
+                                     h4("Filter Based on Relationships"),
+                                     sliderInput("years", "What time year are you interested in?", value = 2005, min = 2005, max = 2021),
+                                     sliderInput("num_contracts", "Filter relationships based on number of contracts.", value = c(1,20), min = 1, max = 20),
                                      #selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE),
                                      selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships)
                                      ),
@@ -85,18 +87,20 @@ server <- function(input, output) {
   {
     nodes <- reactive({
       master_data %>%
-        filter(sender_orgtype %in% input$select_sender_org_type) %>%
+        filter(sender_orgtype %in% input$select_sender_org_type,
+               Year == input$years) %>%
         mutate(id = sender, group = sender_orgtype) %>%
         select(id, group, sector) %>%
         bind_rows(
           master_data %>%
-            filter(receiver_orgtype %in% input$select_receiver_org_type) %>%
+            filter(receiver_orgtype %in% input$select_receiver_org_type,
+                   Year == input$years) %>%
             mutate(id = receiver, group = receiver_orgtype) %>%
             select(id, group, sector)
         ) %>%
         distinct(id, .keep_all = TRUE) %>%
         mutate(label = id,
-               title = glue("The organization is {id}. They are a {group} type of organization within the {sector} sector."))
+               title = glue("The organization is {id}. <br> They are a {group} type of organization."))
     })
   }
   
@@ -111,6 +115,7 @@ server <- function(input, output) {
       mutate(value = n())%>%
       ungroup() %>%
       distinct(from, to, value, .keep_all = TRUE) %>%
+      filter(value >= input$num_contracts[1], value <= input$num_contracts[2]) %>%
       mutate(title = glue("This relationship represents {value} contracts <br> from {from} <br> to {to}."))
     })
   
