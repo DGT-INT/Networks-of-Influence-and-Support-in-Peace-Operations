@@ -16,7 +16,7 @@ library(glue)
 
 # Assigning Input Vectors for the filter Selection (i might need to update this to make it interactive)
 {
-country <- c("Burundi", "Colombia")
+country <- c("burundi", "colombia")
 dataframe <- c("United Nations Multi-Partner Trust Fund (MPTF) documents",
                "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)",
                "International Aid Transparency Initiative (IATI)",
@@ -91,14 +91,16 @@ server <- function(input, output) {
       master_data %>%
         filter(sender_orgtype %in% input$select_sender_org_type,
                Year == input$years,
-               data == input$select_dataframe) %>%
+               data == input$select_dataframe,
+               Country == input$select_country) %>%
         mutate(id = sender, group = sender_orgtype) %>%
         select(id, group, sector) %>%
         bind_rows(
           master_data %>%
             filter(receiver_orgtype %in% input$select_receiver_org_type,
                    Year == input$years,
-                   data == input$select_dataframe) %>%
+                   data == input$select_dataframe,
+                   Country == input$select_country) %>%
             mutate(id = receiver, group = receiver_orgtype) %>%
             select(id, group, sector)
         ) %>%
