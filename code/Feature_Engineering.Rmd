@@ -92,8 +92,7 @@ rm(list = setdiff(ls(), "final_data"))
 ```{r}
 test_data <- final_data %>%
   filter(Country == "burundi",
-         data == "crs",
-         Year %in% c("2005", "2006"))
+         Year %in% c("2007", "2008"))
 ```
 
 # running test with data in visnetwork
