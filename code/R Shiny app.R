@@ -25,7 +25,7 @@ dataframe <- c("United Nations Multi-Partner Trust Fund (MPTF) documents",
 sender_org_type <- unique(master_data$sender_orgtype)
 receiver_org_type <- unique(master_data$receiver_orgtype)
 #sector <- unique(Burundi_CRS_all_years$sector)
-relationships <- c("relationship 1", "relationship 2", "relationship 3")
+relationships <- c("Number of Contracts", "Cost")
 }
 
 # Define UI for application
@@ -39,17 +39,32 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                           fluidPage(
                             fluidRow(
                               column(4,
+                                     
                                      h4("Filter Based on Data"),
-                                     selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe, selected = "mptf" ),
-                                     selectInput("select_country", "What country are you interested in?", choices= country),
+                                     checkboxInput("data_filters", "Customize network based on data?"),
+                                     conditionalPanel(
+                                       condition = "input.data_filters == true",
+                                       selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe, selected = "mptf" ),
+                                       selectInput("select_country", "What country are you interested in?", choices= country),
+                                       sliderInput("years", "What time year are you interested in?", value = 2007, min = 2005, max = 2021)
+                                     ),
+                                     
                                      h4("Filter Based on Nodes"),
-                                     selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= sender_org_type, multiple = TRUE, selected = sender_org_type),
-                                     selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= receiver_org_type, multiple = TRUE, selected = receiver_org_type),
+                                     checkboxInput("node_filters", "Customize network based on nodes?"),
+                                     conditionalPanel(
+                                       condition = "input.node_filters == true",
+                                       selectInput("select_sender_org_type", "What type of sender organizations are you interested in?", choices= sender_org_type, multiple = TRUE, selected = sender_org_type),
+                                       selectInput("select_receiver_org_type", "What type of receiver organizations are you interested in?", choices= receiver_org_type, multiple = TRUE, selected = receiver_org_type)
+                                     ),
+                                     
                                      h4("Filter Based on Relationships"),
-                                     sliderInput("years", "What time year are you interested in?", value = 2007, min = 2005, max = 2021),
-                                     sliderInput("num_contracts", "Filter relationships based on number of contracts.", value = c(1,20), min = 1, max = 20),
-                                     #selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE),
-                                     selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships)
+                                     checkboxInput("edge_filters", "Cutomize network based on edges?"),
+                                     conditionalPanel(
+                                       condition = "input.edge_filters == true",
+                                       selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships),
+                                       sliderInput("num_contracts", "Filter relationships based on number of contracts.", value = c(1,20), min = 1, max = 20)
+                                       #selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE),
+                                     )
                                      ),
                               column(8,
                                      titlePanel("Network Visualization of Peace Operations"),
