@@ -152,11 +152,43 @@ test_edges1 <- test_edges %>%
 ```
 
 ## Creating (test) Visual
-```{r}
+```{r, eval=FALSE}
 visNetwork(test_nodes, test_edges1) %>%
   visLayout(randomSeed = 123) %>%
   visEdges(arrows = "to") %>%
   visOptions(highlightNearest = TRUE)
+```
+
+# Last second adjustments
+```{r}
+test_data <- test_data %>%
+  mutate(
+    data = case_when(
+      data == "crs" ~ "Organization for Economic Co-operation and Development Creditor Reporting System (OECD CRS)",
+      data == "mptf" ~ "United Nations Multi-Partner Trust Fund (MPTF) documents"
+    ),
+    Country = case_when(
+      Country == "burundi" ~ "Burundi",
+      Country == "colombia" ~ "Colombia"
+    )
+  ) %>%
+  select(-id)
+```
+
+```{r}
+unique_sectors <- unique(test_data$sector)
+unique_sectors
+
+#classifying randomly into 3 sectors for simplicity
+test_data <- test_data %>%
+  group_by(sector) %>%
+  mutate(sector = case_when(
+    row_number() %% 3 == 1 ~ "Nutrition",
+    row_number() %% 3 == 2 ~ "National Security",
+    row_number() %% 3 == 0 ~ "WASH"
+  )) %>%
+  ungroup()
+
 ```
 
 
