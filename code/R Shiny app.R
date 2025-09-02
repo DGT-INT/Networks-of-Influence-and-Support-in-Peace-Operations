@@ -29,10 +29,9 @@ relationships <- c("Number of Contracts", "Cost")
 ui <- { navbarPage("Research on International Policy Implementation Lab",
                  id = "tabs",
 
-    tabPanel("Home"),
-    navbarMenu("Data",
-                 tabPanel("About the data"),
-                 tabPanel("Data Vizualization",
+    tabPanel("Overview"),
+    
+    tabPanel("Data Vizualization",
                           fluidPage(
                             fluidRow(
                               column(4,
@@ -81,11 +80,11 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                             )
                             )
                  ), # closing data vis tab
+    
+    tabPanel("Info")
                
-                 tabPanel("Testing",
-                          verbatimTextOutput("nodes_dataframe"),
-                          verbatimTextOutput("edges_dataframe"))
-      )
+                
+      
 ) }
     
 # Define server logic required
@@ -123,8 +122,7 @@ server <- function(input, output) {
     })
   }
   
-  output$nodes_dataframe <- renderPrint(head(nodes()))
-  
+
   ## Creating Edges Data Frame for the Visual (weighted with number of contracts)
   edges_base <- reactive({ 
     master_data %>%
@@ -167,10 +165,6 @@ server <- function(input, output) {
         )%>%
       select(-value2)
     })
-  
-  
-  output$edges_dataframe <- renderPrint(head(edges()))
-  
   
   ## Visual
   output$network_viz <- renderVisNetwork({
