@@ -62,7 +62,10 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                                        sliderInput("num_contracts", "Filter relationships based on number of contracts.", value = c(0,20), min = 0, max = 20),
                                        sliderInput("cost_contracts", "Filter relationships based on the cost of the contracts.", value = c(0,12000000), min = 0, max = 120000000),
                                        selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE, selected = sector),
-                                     )
+                                     ),
+                                     
+                                     downloadButton("download_full", "Download full dataset"),
+                                     
                                      ),
                               column(8,
                                      titlePanel("Network Visualization of Peace Operations"),
@@ -73,9 +76,6 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                               ),
                             fluidRow(
                               column(12,
-                                     downloadButton("download_full", "Download full dataset"),
-                                     downloadButton("download_custom", "Download Custom dataset"),
-                                     
                                      dataTableOutput("data_table")
                                      )
                             )
@@ -189,6 +189,17 @@ server <- function(input, output) {
   output$data_table <- renderDT({
     datatable(display_data(), options = list(pageLength = 10))
   })
+  
+  ## Download Data
+  output$download_full <- downloadHandler(
+    filename = function() {
+      paste("full_dataset-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(master_data, file, row.names = FALSE)
+    }
+  )
+  
   
 }
 
