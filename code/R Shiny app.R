@@ -43,7 +43,7 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                                        condition = "input.data_filters == true",
                                        selectInput("select_dataframe", "What dataframe are you interested in?", choices= dataframe, selected = "mptf" ),
                                        selectInput("select_country", "What country are you interested in?", choices= country),
-                                       sliderInput("years", "What year are you interested in?", value = 2007, min = 2005, max = 2021, sep = "")
+                                       sliderInput("years", "What year are you interested in?", value = 2016, min = 2005, max = 2021, sep = "")
                                      ),
                                      
                                      h4("Filter Based on Nodes", style = "text-decoration: underline;"),
@@ -59,7 +59,8 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                                      conditionalPanel(
                                        condition = "input.edge_filters == true",
                                        selectInput("select_relationship", "What type of relationship are you interested in?", choices= relationships),
-                                       sliderInput("num_contracts", "Filter relationships based on number of contracts.", value = c(1,20), min = 1, max = 20),
+                                       sliderInput("num_contracts", "Filter relationships based on number of contracts.", value = c(0,20), min = 0, max = 20),
+                                       sliderInput("cost_contracts", "Filter relationships based on the cost of the contracts.", value = c(0,12000000), min = 0, max = 120000000),
                                        selectInput("select_sector", "What sectors are you interested in?", choices= sector, multiple = TRUE, selected = sector),
                                      )
                                      ),
@@ -125,19 +126,48 @@ server <- function(input, output) {
   output$nodes_dataframe <- renderPrint(head(nodes()))
   
   ## Creating Edges Data Frame for the Visual (weighted with number of contracts)
-  edges <- reactive({ 
+  edges_base <- reactive({ 
     master_data %>%
       mutate(from = sender, to = receiver) %>%
       select(from, to, sector, cost) %>%
       group_by(from, to) %>%
-      mutate(value = n())%>%
-      ungroup() %>%
-      distinct(from, to, value, .keep_all = TRUE) %>%
-      filter(value >= input$num_contracts[1], value <= input$num_contracts[2],
-             sector %in% input$select_sector) %>%
-      mutate(title = glue("This relationship represents {value} contracts <br> from {from} <br> to {to} <br> within the {sector} sector.")) %>%
-      select(-sector)
+      summarise(
+        value = n(),              # number of contracts
+        value2 = sum(cost),       # total cost
+        sector = first(sector),   # keep a sector label (if you need one)
+        .groups = "drop"
+      ) %>%
+      filter(
+        value >= input$num_contracts[1],
+        value <= input$num_contracts[2],
+        value2 >= input$cost_contracts[1],
+        value2 <= input$cost_contracts[2],
+        sector %in% input$select_sector
+      ) %>%
+      mutate(
+        title = glue(
+          "This relationship represents {value} contracts <br>
+         from {from} <br>
+         to {to} <br>
+         within the {sector} sector. <br>
+         Total cost: {scales::comma(value2)}"
+        )
+      ) %>%
+      select(-sector)   # drop sector if you don’t need it anymore
+  })
+  
+  ## selecting which relationship to display visually
+  edges <- reactive({
+    edges_base() %>%
+      mutate(
+        value = case_when(
+          input$select_relationship == "Number of Contracts" ~ value,
+          input$select_relationship == "Cost" ~ value2
+          )
+        )%>%
+      select(-value2)
     })
+  
   
   output$edges_dataframe <- renderPrint(head(edges()))
   

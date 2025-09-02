@@ -91,7 +91,7 @@ rm(list = setdiff(ls(), "final_data"))
 # filtering data to run test and saving
 ```{r}
 test_data <- final_data %>%
-  filter(Year %in% c("2007", "2008", "2016"))
+  filter(Year %in% c("2016", "2017"))
 ```
 
 # running test with data in visnetwork
@@ -149,6 +149,12 @@ test_edges1 <- test_edges %>%
   mutate(value = n())%>%
   ungroup() %>%
   distinct(from, to, value, .keep_all = TRUE)
+
+test_edges2 <- test_edges %>%
+  group_by(from, to) %>%
+  mutate(value2 = sum(cost))%>%
+  ungroup() %>%
+  distinct(from, to, value2, .keep_all = TRUE)
 ```
 
 ## Creating (test) Visual
