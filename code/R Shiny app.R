@@ -29,7 +29,78 @@ relationships <- c("Number of Contracts", "Cost")
 ui <- { navbarPage("Research on International Policy Implementation Lab",
                  id = "tabs",
 
-    tabPanel("Overview"),
+    tabPanel("Overview",
+             h1("Networks of Influence and Support: An Interactive Visualization"),
+               br(),
+               h4("About"),
+               p("This project is an interactive R Shiny application designed to visually explore the networks
+                 of influence and support in peace operations. The tool enables users—researchers, policymakers, 
+                 or practitioners—to investigate key relationships and actors involved in international 
+                 peacebuilding missions."),
+             
+              h4("Purpose"),
+              p("Peace operations are complex systems involving multiple actors—governments, 
+                NGOs, donors, military organizations, and local communities. This app aims to:"),
+              tags$ul(
+                tags$li("Visually map the relationships of influence (e.g., advisory roles, decision-making authority) 
+                        and support (e.g., funding, logistics, coordination)."),
+                tags$li("Allow users to filter, highlight, and customize the network to explore specific actors 
+                        or types of connections."),
+                tags$li("Provide insights into power dynamics, information flows, and collaborative structures 
+                        within peace operations.")
+              ),
+               
+               h4("Data"),
+               p("The Networks of Influence and Support in Peace Operations project provides three 
+                 complementary datasets that capture the presence and roles of peacebuilding actors in 
+                 conflict-affected countries. The first, the Organization List Dataset, documents all 
+                 peacebuilding actors present in a given country and includes key organizational characteristics 
+                 such as type, mandate, and origin. The second, the Contractual Agreements Dataset, captures the 
+                 involvement of actors in donor-funded projects, recording each organization’s role, the relationships 
+                 formed through these projects, and project-level details such as funding, sector, and geographic focus. 
+                 This dataset also provides variables that enable the study of both direct and indirect network relationships. 
+                 The third, the Coordination Structures Dataset, tracks organizations’ participation in formal coordination 
+                 mechanisms, such as donor coordination groups and the United Nations Cluster System, which bring together 
+                 humanitarian, peacebuilding, and development actors. These datasets can be analyzed individually or 
+                 combined, offering a detailed foundation for exploring how peacebuilding organizations interact, 
+                 collaborate, and share resources in conflict-affected contexts."),
+
+               h4("How to Use the App"),
+               tags$ol(
+                 tags$li("Use the navigation tabs at the top to switch to the data visulization tab."),
+                 tags$li("The 'Network Visualization' tab allows you to explore nodes and edges interactively."),
+                 tags$li("Use filters (e.g., by year, sector, number of contracts) to focus on specific subsets."),
+                 tags$li("Hover or click on nodes to display additional details.")
+               ),
+             h4("Limitations"),
+             p("The current version of this application is based on an incomplete version of the dataset.
+               At this stage, the data are limited to the years 2016 and 2017, which means that the patterns 
+               and relationships presented here should be interpreted with caution. Future updates will 
+               incorporate additional years and more complete information, providing a fuller picture of 
+               the networks of influence and support in peace operations."),
+               
+               h4("Disclaimer"),
+               p("This visualization is intended for exploratory and illustrative purposes. 
+      The dataset may not capture all relationships and should not be considered comprehensive."),
+            
+    tags$h4("Contact Us"),
+    tags$p(
+      "For questions, feedback, or collaboration inquiries related to the ",
+      tags$em("Networks of Influence and Support in Peace Operations"),
+      " project, please reach out to us at:"
+    ),
+    tags$p(
+      tags$b("Email: "),
+      tags$a(href = "mailto:Info@DGT-International.com", "Info@DGT-International.com")
+    ),
+    tags$p(
+      tags$b("Website: "),
+      tags$a(href = "https://www.DGT-International.com", "www.DGT-International.com", target = "_blank"),
+      tags$br(),
+      tags$a(href = "https://www.ripilab.com", "www.ripilab.com", target = "_blank")
+    )
+),
+    
     
     tabPanel("Data Vizualization",
                           fluidPage(
@@ -79,9 +150,7 @@ ui <- { navbarPage("Research on International Policy Implementation Lab",
                                      )
                             )
                             )
-                 ), # closing data vis tab
-    
-    tabPanel("Info")
+                 ) # closing data vis tab
                
                 
       
@@ -193,7 +262,6 @@ server <- function(input, output) {
       write.csv(master_data, file, row.names = FALSE)
     }
   )
-  
   
 }
 
